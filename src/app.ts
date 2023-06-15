@@ -15,7 +15,7 @@ async function startServer() {
     if (DATABASE_URL) {
       const connection = await mongoose.connect(DATABASE_URL)
       connection && console.log('Connected to database')
-
+      app.use(express.json())
       app.use('/users', userRoutes)
       app.use('/', authRoutes)
       app.use('/', (req: Request, res: Response, next: NextFunction): void => {
