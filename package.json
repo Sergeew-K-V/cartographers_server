@@ -2,9 +2,9 @@
   "name": "cartographers_server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.ts",
+  "main": "src/app.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "prettier": "prettier --write .",
     "test": "jest --coverage"
   },

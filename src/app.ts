@@ -1,3 +1,8 @@
+import dotenv from 'dotenv'
+dotenv.config()
+const PORT = process.env.PORT
+const DATABASE_URL = process.env.DATABASE_URL
+
 import express, { Application, Request, Response, NextFunction } from 'express'
 import { router as userRoutes } from './routes/user.routes'
 import mongoose from 'mongoose'
@@ -6,8 +11,8 @@ const app: Application = express()
 
 async function startServer() {
   try {
-    if (process.env.DATABASE_URL) {
-      const connection = await mongoose.connect(process.env.DATABASE_URL)
+    if (DATABASE_URL) {
+      const connection = await mongoose.connect(DATABASE_URL)
       connection && console.log('Connected to database')
 
       app.use('/users', userRoutes)
@@ -16,8 +21,11 @@ async function startServer() {
         res.json({ message: 'Allo! Catch-all route.' })
       })
     }
+    app.listen(PORT, (): void =>
+      console.log(`Server is running on port ${PORT}`)
+    )
   } catch (error) {
-    console.log('Error!')
+    console.log('Server error!', error)
   }
 }
 
