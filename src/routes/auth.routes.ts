@@ -10,6 +10,13 @@ const router = Router()
 interface IUser {
   email: string
   password: string
+  nickname: string
+  rang: string
+  gameStats: {
+    rate: number
+    wins: number
+    loses: number
+  }
 }
 
 router.post(
@@ -28,7 +35,7 @@ router.post(
         return res.status(400).json('Incorrect data for registeration.')
       }
 
-      const { email, password }: IUser = req.body
+      const { email, password, nickname }: IUser = req.body
       const candidate = await UserModel.findOne({ email })
 
       if (candidate) {
@@ -37,7 +44,13 @@ router.post(
 
       const hashedPassword = await bcryptjs.hash(password, 12)
 
-      const user = new UserModel({ email, password: hashedPassword })
+      const user = new UserModel({
+        email,
+        password: hashedPassword,
+        gameStats: { loses: 0, rate: 1000, wins: 0 },
+        nickname,
+        rang: 'Common',
+      })
 
       await user.save()
 
@@ -83,12 +96,13 @@ router.post(
         expiresIn: '1h',
       })
 
-      return res.json({ token, userId: user.id })
+      return res.json({ token, userId: user._id })
     } catch (error) {
       return res.status(500).json('Something was wrong in register.')
     }
   }
 )
+
 router.post('/forgotPassword', async (req: Request, res: Response) => {})
 
 export { router }
