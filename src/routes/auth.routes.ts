@@ -1,8 +1,8 @@
-import { Router, Request, Response } from 'express'
+import { Router, Request, Response, NextFunction } from 'express'
 import UserModel from '../models/user.model'
 import { check, validationResult } from 'express-validator'
 import bcryptjs from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET
 const router = Router()
@@ -104,5 +104,28 @@ router.post(
 )
 
 router.post('/forgotPassword', async (req: Request, res: Response) => {})
+
+router.get(
+  '/verifyToken',
+  (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization
+
+    if (!token) {
+      return res.status(401).json({ message: 'Token not provided' })
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+
+      if ((decoded as JwtPayload).exp! < Date.now() / 1000) {
+        return res.status(401).json({ message: 'Token expired' })
+      }
+      // next()
+    } catch (err) {
+      console.log('🚀 ~ file: verifyToken.ts:22 ~ verifyToken ~ err:', err)
+      return res.status(401).json({ message: 'Invalid token' })
+    }
+  }
+)
 
 export { router }
