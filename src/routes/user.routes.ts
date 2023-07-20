@@ -11,13 +11,16 @@ router.get(
     try {
       const _id = req.params
 
-      const user = await userModel.findOne({ _id })
+      const user = await userModel.findOne({
+        _id,
+      })
 
       if (!user) {
         return res.status(400).json("User didn't find")
       }
+      const { rang, gameStats, nickname, email } = user
 
-      return res.json({ gameStats:user.gameStats,nickname:user.nickname,rang:user.rang })
+      return res.json({ gameStats, nickname, rang, email })
     } catch (error) {
       return res.status(500).json(`User doesn't find.`)
     }
