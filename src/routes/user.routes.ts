@@ -17,7 +17,7 @@ router.get(
         return res.status(400).json("User didn't find")
       }
 
-      return res.json({ user })
+      return res.json({ gameStats:user.gameStats,nickname:user.nickname,rang:user.rang })
     } catch (error) {
       return res.status(500).json(`User doesn't find.`)
     }
