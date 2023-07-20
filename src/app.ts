@@ -26,6 +26,7 @@ async function startServer() {
 
       io.on('connection', (socket) => {
         console.log('user connected')
+        socket.emit('success-connection')
 
         socket.on('disconnect', () => {
           console.log('user disconnected')
@@ -49,3 +50,5 @@ async function startServer() {
 }
 
 startServer()
+
+export default app
