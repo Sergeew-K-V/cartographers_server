@@ -99,7 +99,7 @@ router.post(
       }
 
       const token = jwt.sign({ userId: user.id }, JWT_SECRET as string, {
-        expiresIn: '2h',
+        expiresIn: '1h',
       })
 
       return res.json({ token, userId: user._id })

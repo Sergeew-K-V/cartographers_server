@@ -10,6 +10,8 @@ import http from 'http'
 import { router as userRoutes } from './routes/user.routes'
 import { router as authRoutes } from './routes/auth.routes'
 import mongoose from 'mongoose'
+import { SocketEvents } from './socket/types'
+import { MainAction } from './socket/actions'
 
 const app: Application = express()
 
@@ -17,6 +19,9 @@ async function startServer() {
   try {
     if (DATABASE_URL) {
       const server = http.createServer(app)
+      const connection = await mongoose.connect(DATABASE_URL)
+      connection && console.log('Connected to database')
+
       const io = new Server(server, {
         cors: {
           origin: '*',
@@ -24,21 +29,12 @@ async function startServer() {
         },
       })
 
-      io.on('connection', (socket) => {
-        console.log('user connected')
-        socket.emit('success-connection')
-
-        socket.on('disconnect', () => {
-          console.log('user disconnected')
-        })
-      })
-
-      const connection = await mongoose.connect(DATABASE_URL)
-      connection && console.log('Connected to database')
       app.use(express.json())
       app.use(cors())
       app.use('/', userRoutes)
       app.use('/', authRoutes)
+
+      io.on(SocketEvents.CONNECTION, MainAction)
 
       server.listen(PORT, (): void =>
         console.log(`Server is running on port ${PORT}`)
