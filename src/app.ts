@@ -9,9 +9,11 @@ import { Server } from 'socket.io'
 import http from 'http'
 import { router as userRoutes } from './routes/user.routes'
 import { router as authRoutes } from './routes/auth.routes'
+import { router as lobbyRoutes } from './routes/lobby.routes'
 import mongoose from 'mongoose'
-import { SocketEvents } from './socket/types'
+import { SocketEvents } from './types'
 import { MainAction } from './socket/actions'
+import { LobbyList } from './store'
 
 const app: Application = express()
 
@@ -31,11 +33,11 @@ async function startServer() {
 
       app.use(express.json())
       app.use(cors())
+      app.use('/', lobbyRoutes)
       app.use('/', userRoutes)
       app.use('/', authRoutes)
 
       io.on(SocketEvents.CONNECTION, MainAction)
-
       server.listen(PORT, (): void =>
         console.log(`Server is running on port ${PORT}`)
       )

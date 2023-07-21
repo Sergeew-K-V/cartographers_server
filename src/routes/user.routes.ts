@@ -6,7 +6,7 @@ import { BAD_REQUEST, INTERNAL_ERROR } from '../constants'
 const router = Router()
 
 router.get(
-  '/getUser/:_id',
+  '/get-user/:_id',
   verifyToken,
   async (req: Request, res: Response) => {
     try {
