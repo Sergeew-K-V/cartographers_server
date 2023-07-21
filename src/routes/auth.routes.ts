@@ -3,6 +3,12 @@ import UserModel from '../models/user.model'
 import { check, validationResult } from 'express-validator'
 import bcryptjs from 'bcryptjs'
 import jwt, { JwtPayload } from 'jsonwebtoken'
+import {
+  BAD_REQUEST,
+  CREATED,
+  INTERNAL_ERROR,
+  UNAUTHORIZED,
+} from '../constants'
 
 const JWT_SECRET = process.env.JWT_SECRET
 const router = Router()
@@ -32,14 +38,14 @@ router.post(
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
-        return res.status(400).json('Incorrect data for registeration.')
+        return res.status(BAD_REQUEST).json('Incorrect data for registeration.')
       }
 
       const { email, password, nickname }: IUser = req.body
       const candidate = await UserModel.findOne({ email })
 
       if (candidate) {
-        return res.status(400).json('This email already registered.')
+        return res.status(BAD_REQUEST).json('This email already registered.')
       }
 
       const hashedPassword = await bcryptjs.hash(password, 12)
@@ -54,9 +60,9 @@ router.post(
 
       await user.save()
 
-      return res.status(201).json('User was registred successfully.')
+      return res.status(CREATED).json('User was registred successfully.')
     } catch (error) {
-      return res.status(500).json('Something was wrong in register.')
+      return res.status(INTERNAL_ERROR).json('Something was wrong in register.')
     }
   }
 )
@@ -72,7 +78,7 @@ router.post(
       const errors = validationResult(req)
 
       if (!errors.isEmpty) {
-        return res.status(400).json('Incorrect data for login.')
+        return res.status(BAD_REQUEST).json('Incorrect data for login.')
       }
 
       const { email, password }: IUser = req.body
@@ -80,7 +86,7 @@ router.post(
       const user = await UserModel.findOne({ email })
 
       if (!user) {
-        return res.status(400).json("User didn't find")
+        return res.status(BAD_REQUEST).json("User didn't find")
       }
 
       const isMatchPassword = await bcryptjs.compare(
@@ -89,7 +95,7 @@ router.post(
       )
 
       if (!isMatchPassword) {
-        return res.status(400).json('Incorrect data for login.')
+        return res.status(BAD_REQUEST).json('Incorrect data for login.')
       }
 
       const token = jwt.sign({ userId: user.id }, JWT_SECRET as string, {
@@ -98,7 +104,7 @@ router.post(
 
       return res.json({ token, userId: user._id })
     } catch (error) {
-      return res.status(500).json('Something was wrong in register.')
+      return res.status(INTERNAL_ERROR).json('Something was wrong in register.')
     }
   }
 )
@@ -111,19 +117,19 @@ router.get(
     const token = req.headers.authorization
 
     if (!token) {
-      return res.status(401).json({ message: 'Token not provided' })
+      return res.status(UNAUTHORIZED).json({ message: 'Token not provided' })
     }
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!)
 
       if ((decoded as JwtPayload).exp! < Date.now() / 1000) {
-        return res.status(401).json({ message: 'Token expired' })
+        return res.status(UNAUTHORIZED).json({ message: 'Token expired' })
       }
       // next()
     } catch (err) {
       console.log('🚀 ~ file: verifyToken.ts:22 ~ verifyToken ~ err:', err)
-      return res.status(401).json({ message: 'Invalid token' })
+      return res.status(UNAUTHORIZED).json({ message: 'Invalid token' })
     }
   }
 )

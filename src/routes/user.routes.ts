@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express'
 import userModel from '../models/user.model'
 import verifyToken from '../middleware/verifyToken'
+import { BAD_REQUEST, INTERNAL_ERROR } from '../constants'
 
 const router = Router()
 
@@ -16,13 +17,13 @@ router.get(
       })
 
       if (!user) {
-        return res.status(400).json("User didn't find")
+        return res.status(BAD_REQUEST).json("User didn't find")
       }
       const { rang, gameStats, nickname, email } = user
 
       return res.json({ gameStats, nickname, rang, email })
     } catch (error) {
-      return res.status(500).json(`User doesn't find.`)
+      return res.status(INTERNAL_ERROR).json(`User doesn't find.`)
     }
   }
 )
