@@ -13,7 +13,6 @@ import { router as lobbyRoutes } from './routes/lobby.routes'
 import mongoose from 'mongoose'
 import { SocketEvents } from './types'
 import { MainAction } from './socket/actions'
-import { LobbyList } from './store'
 
 const app: Application = express()
 
@@ -37,7 +36,7 @@ async function startServer() {
       app.use('/', userRoutes)
       app.use('/', authRoutes)
 
-      io.on(SocketEvents.CONNECTION, MainAction)
+      io.on(SocketEvents.CONNECTION, (socket) => MainAction(socket, io))
       server.listen(PORT, (): void =>
         console.log(`Server is running on port ${PORT}`)
       )

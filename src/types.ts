@@ -1,10 +1,12 @@
 enum SocketEvents {
   CONNECTION = 'connection',
   DISCONNECT = 'disconnect',
-  JOIN_ROOM = 'joinRoom',
-  LEAVE_ROOM = 'leaveRoom',
-  CREATE_LOBBY = 'createLobby',
   LOBBY_CREATED = 'lobbyCreated',
+
+  UPDATE_LOBBY = 'lobbyUpdate',
+  CREATE_LOBBY = 'createLobby',
+  JOIN_LOBBY = 'joinLobby',
+  LEAVE_LOBBY = 'leaveLobby',
 }
 
 interface IUser {

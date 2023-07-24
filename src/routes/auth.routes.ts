@@ -42,7 +42,7 @@ router.post(
       }
 
       const { email, password, nickname }: IUser = req.body
-      const candidate = await UserModel.findOne({ email })
+      const candidate = await UserModel.findOne({ email: email.trim() })
 
       if (candidate) {
         return res.status(BAD_REQUEST).json('This email already registered.')
@@ -83,7 +83,7 @@ router.post(
 
       const { email, password }: IUser = req.body
 
-      const user = await UserModel.findOne({ email })
+      const user = await UserModel.findOne({ email: email.trim() })
 
       if (!user) {
         return res.status(BAD_REQUEST).json("User didn't find")
