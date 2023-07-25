@@ -1,12 +1,19 @@
+import { Socket, Server } from 'socket.io'
+import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+
 enum SocketEvents {
   CONNECTION = 'connection',
   DISCONNECT = 'disconnect',
-  LOBBY_CREATED = 'lobbyCreated',
 
-  UPDATE_LOBBY = 'lobbyUpdate',
-  CREATE_LOBBY = 'createLobby',
   JOIN_LOBBY = 'joinLobby',
   LEAVE_LOBBY = 'leaveLobby',
+
+  LOBBY_CREATED = 'lobbyCreated',
+  CREATE_LOBBY = 'createLobby',
+
+  USER_LEAVE_LOBBY = 'userLeaveLobby',
+  UPDATE_LOBBY = 'lobbyUpdate',
+  DELETE_LOBBY = 'deleteLobby',
 }
 
 interface IUser {
@@ -21,6 +28,13 @@ interface IUser {
   }
 }
 
+interface IConfiguration {
+  socket: Socket
+  io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+  LobbyList: ILobby[]
+  UsersMap: Record<string, string>
+}
+
 interface ILobby {
   id: string
   name: string
@@ -29,4 +43,4 @@ interface ILobby {
   isStarted: boolean
 }
 
-export { SocketEvents, IUser, ILobby }
+export { SocketEvents, IUser, ILobby, IConfiguration }

@@ -1,55 +1,31 @@
 import { Server, Socket } from 'socket.io'
-import { ILobby, IUser, SocketEvents } from '../../types'
-import { LobbyList, FilterLobbyList, clearLobbyList } from '../../store'
+import { IConfiguration, SocketEvents } from '../../types'
+import { LobbyList, UsersMap } from '../../store'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+import createLobby from './createLobby'
+import joinLobby from './joinLobby'
+import disconnectSocket from './disconnectSocket'
+import leaveLobby from './leaveLobby'
 
 const MainAction = (
   socket: Socket,
   io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
 ) => {
-  socket.on(SocketEvents.CREATE_LOBBY, (user: IUser) => {
-    const isHostingAnyLobby = LobbyList.find((lobby) =>
-      lobby.id === socket.id ? true : false
-    )
+  const configuration: IConfiguration = { socket, io, LobbyList, UsersMap }
 
-    if (isHostingAnyLobby) return
+  socket.on(SocketEvents.CREATE_LOBBY, (userId: string) =>
+    createLobby(configuration, userId)
+  )
 
-    const LobbyName = user.nickname + '-lobby'
+  socket.on(SocketEvents.JOIN_LOBBY, (lobbyId: string, userId: string) =>
+    joinLobby(configuration, lobbyId, userId)
+  )
 
-    const Lobby: ILobby = {
-      id: socket.id,
-      name: LobbyName,
-      host: user.nickname,
-      isStarted: false,
-      userList: [user],
-    }
+  socket.on(SocketEvents.LEAVE_LOBBY, (userId: string) =>
+    leaveLobby(configuration, userId)
+  )
 
-    socket.join(LobbyName)
-
-    io.emit(SocketEvents.LOBBY_CREATED, Lobby)
-
-    LobbyList.push(Lobby)
-  })
-
-  socket.on(SocketEvents.JOIN_LOBBY, (lobbyId: string, user: IUser) => {
-    socket.join(lobbyId)
-
-    const currentLobby = LobbyList.find((lobby) => lobby.id === lobbyId)
-
-    if (currentLobby) {
-      currentLobby.userList.push(user)
-
-      io.emit(SocketEvents.UPDATE_LOBBY, currentLobby)
-    }
-  })
-
-  socket.on(SocketEvents.DISCONNECT, () => {
-    // clearLobbyList(socket.id)
-
-    // FilterLobbyList(socket.id)
-
-    socket.disconnect()
-  })
+  socket.on(SocketEvents.DISCONNECT, () => disconnectSocket(configuration))
 }
 
 export default MainAction

@@ -1,24 +1,44 @@
 import { ILobby } from './types'
 
+let UsersMap: Record<string, string> = {}
+
+const addUserToMap = (socketId: string, userId: string) => {
+  UsersMap[socketId] = userId
+}
+
+const removeUserFromMap = (socketId: string, userId: string) => {
+  const updatedMap: Record<string, string> = { ...UsersMap }
+
+  for (const [key, value] of Object.entries(updatedMap)) {
+    if (key === socketId && value === userId) {
+      delete updatedMap[key]
+      break
+    }
+  }
+
+  UsersMap = { ...updatedMap }
+}
+
 let LobbyList: ILobby[] = []
 
-const FilterLobbyList = (socketId: string) => {
-  const filterdLobbyList = LobbyList.filter((lobby) => lobby.id !== socketId)
-  LobbyList = filterdLobbyList
+const findLobbyByLobbyId = (list: ILobby[], lobbyId: string) => {
+  const lobby = list.find((lobby) => lobby.id === lobbyId)
+  return lobby
 }
 
-const clearLobbyList = (socketId: string) => {
-  const lobby = LobbyList.find((lobby) => lobby.id === socketId)
-  if (
-    lobby &&
-    lobby.userList.length === 1 &&
-    lobby.userList.find((user) => user.nickname === lobby.host)
-      ? true
-      : false
-  ) {
-    const filterdLobbyList = LobbyList.filter((lobby) => lobby.id !== socketId)
-    LobbyList = filterdLobbyList
-  }
+const filterLobbyList = (currentLobby: ILobby) => {
+  const sortedLobbies = LobbyList.filter(
+    (lobby) => lobby.id !== currentLobby?.id
+  )
+
+  LobbyList = sortedLobbies
 }
 
-export { LobbyList, clearLobbyList, FilterLobbyList }
+export {
+  LobbyList,
+  filterLobbyList,
+  findLobbyByLobbyId,
+  UsersMap,
+  addUserToMap,
+  removeUserFromMap,
+}
