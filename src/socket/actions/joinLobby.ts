@@ -18,8 +18,8 @@ const joinLobby = async (
     )
     if (!isUserAlreadyInLobby && currentLobby.userList.length < 4) {
       socket.join(currentLobby.id)
-
       addUserToMap(socket.id, currentUser._id.toString())
+
       const user: IUser = {
         email: currentUser.email as string,
         nickname: currentUser.nickname as string,

@@ -10,8 +10,6 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
   if (currentUser) {
     const userId = currentUser._id.toString()
 
-    addUserToMap(socket.id, userId)
-
     const LobbyName = (currentUser.nickname as string) + '-lobby'
 
     const Lobby: ILobby = {
@@ -35,6 +33,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
     }
 
     socket.join(LobbyName)
+    addUserToMap(socket.id, userId)
 
     io.emit(SocketEvents.LOBBY_CREATED, Lobby)
 
