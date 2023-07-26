@@ -1,4 +1,4 @@
-import { IConfiguration, ILobby, SocketEvents } from '../../types'
+import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
 import { addUserToMap } from '../../store'
 
@@ -35,7 +35,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
     socket.join(LobbyName)
     addUserToMap(socket.id, userId)
 
-    io.emit(SocketEvents.LOBBY_CREATED, Lobby)
+    io.emit('LOBBY_CREATED', Lobby)
 
     LobbyList.push(Lobby)
   }

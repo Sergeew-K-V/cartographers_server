@@ -1,4 +1,4 @@
-import { IUser, SocketEvents, IConfiguration } from '../../types'
+import { IUser, IConfiguration } from '../../types'
 import { addUserToMap, findLobbyByLobbyId } from '../../store'
 import userModel from '../../models/user.model'
 
@@ -34,7 +34,7 @@ const joinLobby = async (
 
       currentLobby.userList.push(user)
 
-      io.emit(SocketEvents.UPDATE_LOBBY, currentLobby)
+      io.emit('UPDATE_LOBBY', currentLobby)
     }
   }
 }

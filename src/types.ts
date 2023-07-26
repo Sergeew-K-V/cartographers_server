@@ -16,6 +16,39 @@ enum SocketEvents {
   DELETE_LOBBY = 'deleteLobby',
 }
 
+type AppSocket = Socket<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>
+
+type IoServerType = Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>
+
+interface ServerToClientEvents {
+  LOBBY_CREATED: (lobby: ILobby) => Promise<void>
+  DELETE_LOBBY: (lobby: ILobby) => void
+  USER_LEAVE_LOBBY: (lobby: ILobby) => void
+  UPDATE_LOBBY: (lobby: ILobby) => void
+}
+
+interface ClientToServerEvents {
+  CONNECTION: () => void
+  DISCONNECT: () => void
+  CREATE_LOBBY: (userId: string) => Promise<void>
+  JOIN_LOBBY: (lobbyId: string, userId: string) => void
+  LEAVE_LOBBY: (userId: string) => void
+}
+
+interface InterServerEvents {}
+
+interface SocketData {}
+
 interface IUser {
   email: string
   _id?: string
@@ -29,8 +62,8 @@ interface IUser {
 }
 
 interface IConfiguration {
-  socket: Socket
-  io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+  socket: AppSocket
+  io: IoServerType
   LobbyList: ILobby[]
   UsersMap: Record<string, string>
 }
@@ -43,4 +76,15 @@ interface ILobby {
   isStarted: boolean
 }
 
-export { SocketEvents, IUser, ILobby, IConfiguration }
+export {
+  SocketEvents,
+  IUser,
+  ILobby,
+  IConfiguration,
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData,
+  AppSocket,
+  IoServerType,
+}

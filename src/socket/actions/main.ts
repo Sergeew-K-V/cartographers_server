@@ -1,31 +1,22 @@
-import { Server, Socket } from 'socket.io'
-import { IConfiguration, SocketEvents } from '../../types'
+import { AppSocket, IConfiguration, IoServerType } from '../../types'
 import { LobbyList, UsersMap } from '../../store'
-import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 import createLobby from './createLobby'
 import joinLobby from './joinLobby'
 import disconnectSocket from './disconnectSocket'
 import leaveLobby from './leaveLobby'
 
-const MainAction = (
-  socket: Socket,
-  io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
-) => {
+const MainAction = (socket: AppSocket, io: IoServerType) => {
   const configuration: IConfiguration = { socket, io, LobbyList, UsersMap }
 
-  socket.on(SocketEvents.CREATE_LOBBY, (userId: string) =>
-    createLobby(configuration, userId)
-  )
+  socket.on('CREATE_LOBBY', (userId) => createLobby(configuration, userId))
 
-  socket.on(SocketEvents.JOIN_LOBBY, (lobbyId: string, userId: string) =>
+  socket.on('JOIN_LOBBY', (lobbyId, userId) =>
     joinLobby(configuration, lobbyId, userId)
   )
 
-  socket.on(SocketEvents.LEAVE_LOBBY, (userId: string) =>
-    leaveLobby(configuration, userId)
-  )
+  socket.on('LEAVE_LOBBY', (userId) => leaveLobby(configuration, userId))
 
-  socket.on(SocketEvents.DISCONNECT, () => disconnectSocket(configuration))
+  socket.on('DISCONNECT', () => disconnectSocket(configuration))
 }
 
 export default MainAction
