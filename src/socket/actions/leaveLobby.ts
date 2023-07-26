@@ -20,15 +20,15 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
         (user) => user._id !== userId
       )
       currentLobby.userList = updatedUserList
-      if (isHostOfLobby) {
-        currentLobby.host = currentLobby.userList[0].nickname
-      }
-
       removeUserFromMap(socket.id, userId)
+
       if (updatedUserList.length === 0) {
         removeLobbyById(currentLobby)
         io.emit('DELETE_LOBBY', currentLobby)
       } else {
+        if (isHostOfLobby) {
+          currentLobby.host = currentLobby.userList[0].nickname
+        }
         io.emit('UPDATE_LOBBY', currentLobby)
       }
     }
