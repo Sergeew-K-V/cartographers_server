@@ -13,18 +13,6 @@ import {
 const JWT_SECRET = process.env.JWT_SECRET
 const router = Router()
 
-interface IUser {
-  email: string
-  password: string
-  nickname: string
-  rang: string
-  gameStats: {
-    rate: number
-    wins: number
-    loses: number
-  }
-}
-
 router.post(
   '/register',
   [
@@ -41,7 +29,7 @@ router.post(
         return res.status(BAD_REQUEST).json('Incorrect data for registeration.')
       }
 
-      const { email, password, nickname }: IUser = req.body
+      const { email, password, nickname } = req.body
       const candidate = await UserModel.findOne({ email: email.trim() })
 
       if (candidate) {
@@ -81,7 +69,7 @@ router.post(
         return res.status(BAD_REQUEST).json('Incorrect data for login.')
       }
 
-      const { email, password }: IUser = req.body
+      const { email, password } = req.body
 
       const user = await UserModel.findOne({ email: email.trim() })
 

@@ -42,8 +42,8 @@ async function startServer() {
 
       app.use(express.json())
       app.use(cors())
-      app.use('/', lobbyRoutes)
-      app.use('/', userRoutes)
+      app.use('/lobbies', lobbyRoutes)
+      app.use('/users', userRoutes)
       app.use('/', authRoutes)
 
       io.on('connection', (socket) => MainAction(socket, io))
