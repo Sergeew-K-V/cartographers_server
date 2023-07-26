@@ -1,5 +1,5 @@
 import {
-  filterLobbyList,
+  removeLobbyById,
   findLobbyByUserId,
   removeUserFromMap,
 } from '../../store'
@@ -18,7 +18,7 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
     removeUserFromMap(socket.id, userId)
 
     if (updatedUserList.length === 0) {
-      filterLobbyList(currentLobby)
+      removeLobbyById(currentLobby)
       io.emit(SocketEvents.DELETE_LOBBY, currentLobby)
     } else {
       io.emit(SocketEvents.USER_LEAVE_LOBBY, currentLobby)

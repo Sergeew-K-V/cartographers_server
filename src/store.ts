@@ -39,7 +39,7 @@ const findLobbyByUserId = (list: ILobby[], userId: string) => {
   return currentLobby
 }
 
-const filterLobbyList = (currentLobby: ILobby) => {
+const removeLobbyById = (currentLobby: ILobby) => {
   const sortedLobbies = LobbyList.filter(
     (lobby) => lobby.id !== currentLobby?.id
   )
@@ -49,7 +49,7 @@ const filterLobbyList = (currentLobby: ILobby) => {
 
 export {
   LobbyList,
-  filterLobbyList,
+  removeLobbyById,
   findLobbyByLobbyId,
   findLobbyByUserId,
   UsersMap,

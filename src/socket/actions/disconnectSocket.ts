@@ -1,5 +1,5 @@
 import { IConfiguration, SocketEvents } from '../../types'
-import { filterLobbyList } from '../../store'
+import { removeLobbyById } from '../../store'
 
 const disconnectSocket = (configuration: IConfiguration) => {
   const { socket, io, LobbyList } = configuration
@@ -14,7 +14,7 @@ const disconnectSocket = (configuration: IConfiguration) => {
   if (currentLobby) {
     if (currentLobby.userList.length === 1) {
       console.log('delete full lobby')
-      filterLobbyList(currentLobby)
+      removeLobbyById(currentLobby)
       io.emit(SocketEvents.DELETE_LOBBY, currentLobby)
     } else {
       console.log('delete user in lobby', currentLobby.id)
