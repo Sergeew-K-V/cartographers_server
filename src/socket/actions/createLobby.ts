@@ -1,6 +1,7 @@
 import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
 import { addUserToMap } from '../../store'
+import { uid } from 'uid'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
   const { socket, io, LobbyList } = configuration
@@ -13,7 +14,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
     const LobbyName = (currentUser.nickname as string) + '-lobby'
 
     const Lobby: ILobby = {
-      id: userId,
+      id: uid(),
       name: LobbyName,
       host: currentUser.nickname as string,
       isStarted: false,
