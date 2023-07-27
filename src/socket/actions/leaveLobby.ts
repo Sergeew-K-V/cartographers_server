@@ -1,14 +1,16 @@
 import {
-  removeLobbyById,
+  removeLobbyByLobbyId,
   findLobbyByUserId,
   removeUserFromMap,
+  getLobbyList,
+  setLobbyList,
 } from '../../store'
 import { IConfiguration } from '../../types'
 
 const leaveLobby = (configuration: IConfiguration, userId: string) => {
-  const { socket, io, LobbyList } = configuration
-
-  const currentLobby = findLobbyByUserId(LobbyList, userId)
+  let { socket, io } = configuration
+  const lobbies = getLobbyList()
+  const currentLobby = findLobbyByUserId(lobbies, userId)
   if (currentLobby) {
     const currentUser = currentLobby?.userList.find((user) => {
       if (user._id === userId) return user
@@ -23,7 +25,8 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
       removeUserFromMap(socket.id, userId)
 
       if (updatedUserList.length === 0) {
-        removeLobbyById(currentLobby)
+        const newLobbies = removeLobbyByLobbyId(lobbies, currentLobby)
+        setLobbyList(newLobbies)
         io.emit('DELETE_LOBBY', currentLobby)
       } else {
         if (isHostOfLobby) {

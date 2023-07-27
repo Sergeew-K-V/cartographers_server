@@ -1,10 +1,10 @@
 import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
-import { addUserToMap } from '../../store'
+import { addLobbyToLobbyList, addUserToMap } from '../../store'
 import { uid } from 'uid'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
-  const { socket, io, LobbyList } = configuration
+  const { socket, io } = configuration
 
   const currentUser = await userModel.findById(userId)
 
@@ -33,12 +33,13 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
       ],
     }
 
-    socket.join(LobbyName)
+    addLobbyToLobbyList(Lobby)
+
     addUserToMap(socket.id, userId)
 
-    io.emit('LOBBY_CREATED', Lobby)
+    socket.join(Lobby.id)
 
-    LobbyList.push(Lobby)
+    io.emit('LOBBY_CREATED', Lobby)
   }
 }
 

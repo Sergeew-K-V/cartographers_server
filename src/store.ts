@@ -39,20 +39,33 @@ const findLobbyByUserId = (list: ILobby[], userId: string) => {
   return currentLobby
 }
 
-const removeLobbyById = (currentLobby: ILobby) => {
-  const sortedLobbies = LobbyList.filter(
-    (lobby) => lobby.id !== currentLobby?.id
-  )
+const removeLobbyByLobbyId = (list: ILobby[], currentLobby: ILobby) => {
+  const sortedLobbies = list.filter((lobby) => lobby.id !== currentLobby?.id)
 
-  LobbyList = sortedLobbies
+  return sortedLobbies
+}
+
+const addLobbyToLobbyList = (lobby: ILobby) => {
+  LobbyList.push(lobby)
+}
+
+const getLobbyList = () => {
+  return LobbyList
+}
+
+const setLobbyList = (lobbyList: ILobby[]) => {
+  LobbyList = lobbyList
 }
 
 export {
   LobbyList,
-  removeLobbyById,
+  removeLobbyByLobbyId,
   findLobbyByLobbyId,
   findLobbyByUserId,
   UsersMap,
   addUserToMap,
   removeUserFromMap,
+  addLobbyToLobbyList,
+  getLobbyList,
+  setLobbyList,
 }

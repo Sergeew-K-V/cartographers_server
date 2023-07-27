@@ -17,7 +17,6 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     }
     next()
   } catch (err) {
-    console.log('🚀 ~ file: verifyToken.ts:22 ~ verifyToken ~ err:', err)
     return res.status(UNAUTHORIZED).json({ message: 'Invalid token' })
   }
 }

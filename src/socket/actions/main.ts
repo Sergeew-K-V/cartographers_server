@@ -1,12 +1,11 @@
-import { AppSocket, IConfiguration, IoServerType } from '../../types'
-import { LobbyList, UsersMap } from '../../store'
+import { AppSocket, IConfiguration, ILobby, IoServerType } from '../../types'
 import createLobby from './createLobby'
 import joinLobby from './joinLobby'
 import disconnectSocket from './disconnectSocket'
 import leaveLobby from './leaveLobby'
 
 const MainAction = (socket: AppSocket, io: IoServerType) => {
-  const configuration: IConfiguration = { socket, io, LobbyList, UsersMap }
+  const configuration: IConfiguration = { socket, io }
 
   socket.on('CREATE_LOBBY', (userId) => createLobby(configuration, userId))
 

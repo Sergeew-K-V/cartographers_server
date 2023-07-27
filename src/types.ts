@@ -64,8 +64,6 @@ interface IUser {
 interface IConfiguration {
   socket: AppSocket
   io: IoServerType
-  LobbyList: ILobby[]
-  UsersMap: Record<string, string>
 }
 
 interface ILobby {
