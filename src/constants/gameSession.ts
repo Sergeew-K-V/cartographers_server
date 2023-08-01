@@ -1,4 +1,6 @@
-const GAME_FIELD = [
+import { IFieldCell } from '../types'
+
+const GAME_FIELD: IFieldCell[][] = [
   [
     { id: 1, image: '/images/other/cell.png' },
     { id: 2, image: '/images/other/cell.png' },

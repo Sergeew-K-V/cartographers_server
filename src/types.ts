@@ -105,4 +105,5 @@ export {
   AppSocket,
   IoServerType,
   IGameSession,
+  IFieldCell,
 }
