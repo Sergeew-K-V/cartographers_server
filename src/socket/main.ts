@@ -1,8 +1,6 @@
-import { AppSocket, IConfiguration, ILobby, IoServerType } from '../../types'
-import createLobby from './createLobby'
-import joinLobby from './joinLobby'
-import disconnectSocket from './disconnectSocket'
-import leaveLobby from './leaveLobby'
+import { AppSocket, IConfiguration, IoServerType } from '../types'
+import { sendingGameSession } from './gameSession'
+import { createLobby, joinLobby, leaveLobby, disconnectSocket } from './lobby'
 
 const MainAction = (socket: AppSocket, io: IoServerType) => {
   const configuration: IConfiguration = { socket, io }
@@ -14,6 +12,10 @@ const MainAction = (socket: AppSocket, io: IoServerType) => {
   )
 
   socket.on('LEAVE_LOBBY', (userId) => leaveLobby(configuration, userId))
+
+  socket.on('GET_GAME_SESSION', (lobbyId, userId) =>
+    sendingGameSession(lobbyId)
+  )
 
   socket.on('DISCONNECT', () => disconnectSocket(configuration))
 }

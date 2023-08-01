@@ -1,5 +1,6 @@
 import { IUser, IConfiguration } from '../../types'
 import {
+  addDataGameSession,
   // addUserToMap,
   findLobbyByLobbyId,
   getLobbyList,
@@ -41,6 +42,7 @@ const joinLobby = async (
 
       currentLobby.userList.push(user)
       setLobbyList(lobbies)
+      addDataGameSession(currentLobby.id, user._id, user.nickname)
       io.emit('UPDATE_LOBBY', currentLobby)
     }
   }

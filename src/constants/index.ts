@@ -7,6 +7,7 @@ import {
   NOT_FOUND,
   CREATED,
 } from './StatusCodes'
+import { GAME_FIELD } from './gameSession'
 
 export {
   OK,
@@ -16,4 +17,5 @@ export {
   UNAUTHORIZED,
   FORBIDDEN,
   NOT_FOUND,
+  GAME_FIELD,
 }

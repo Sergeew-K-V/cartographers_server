@@ -5,6 +5,8 @@ enum SocketEvents {
   CONNECTION = 'connection',
   DISCONNECT = 'disconnect',
 
+  GET_GAME_SESSION = 'getGameSession',
+
   JOIN_LOBBY = 'joinLobby',
   LEAVE_LOBBY = 'leaveLobby',
 
@@ -43,6 +45,7 @@ interface ClientToServerEvents {
   CREATE_LOBBY: (userId: string) => Promise<void>
   JOIN_LOBBY: (lobbyId: string, userId: string) => void
   LEAVE_LOBBY: (userId: string) => void
+  GET_GAME_SESSION: (lobbyId: string, userId: string) => void
 }
 
 interface InterServerEvents {}
@@ -51,7 +54,7 @@ interface SocketData {}
 
 interface IUser {
   email: string
-  _id?: string
+  _id: string
   nickname: string
   rang?: string
   gameStats?: {
@@ -67,9 +70,14 @@ interface IConfiguration {
 }
 interface UserGameData {
   nickname: string
-  gameField: number[][]
+  gameField: IFieldCell[][]
   isReady: boolean
   score: number
+}
+
+interface IFieldCell {
+  id: number
+  image: string
 }
 
 interface IGameSession {

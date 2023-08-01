@@ -1,4 +1,10 @@
 import {
+  gameSession,
+  addDataGameSession,
+  removeDataGameSession,
+  removeGameSession,
+} from './gameSession'
+import {
   LobbyList,
   addLobbyToLobbyList,
   findLobbyByLobbyId,
@@ -16,4 +22,8 @@ export {
   getLobbyList,
   removeLobbyByLobbyId,
   setLobbyList,
+  gameSession,
+  addDataGameSession,
+  removeDataGameSession,
+  removeGameSession,
 }

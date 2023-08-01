@@ -4,6 +4,8 @@ import {
   // removeUserFromMap,
   getLobbyList,
   setLobbyList,
+  removeDataGameSession,
+  removeGameSession,
 } from '../../store'
 import { IConfiguration } from '../../types'
 
@@ -26,15 +28,16 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
       )
       currentLobby.userList = updatedUserList
       // removeUserFromMap(socket.id, userId)
-
       if (updatedUserList.length === 0) {
         const newLobbies = removeLobbyByLobbyId(lobbies, currentLobby)
         setLobbyList(newLobbies)
+        removeGameSession(currentLobby.id)
         io.emit('DELETE_LOBBY', currentLobby)
       } else {
         if (isHostOfLobby) {
           currentLobby.host = currentLobby.userList[0].nickname
         }
+        removeDataGameSession(currentLobby.id, userId)
         io.emit('UPDATE_LOBBY', currentLobby)
       }
     }

@@ -2,7 +2,8 @@ import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
 import {
   addLobbyToLobbyList,
-  // addUserToMap
+  // addUserToMap,
+  addDataGameSession,
 } from '../../store'
 import { uid } from 'uid'
 
@@ -12,7 +13,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
   const currentUser = await userModel.findById(userId)
 
   if (currentUser) {
-    // const userId = currentUser._id.toString()
+    const userId = currentUser._id.toString()
 
     const LobbyName = (currentUser.nickname as string) + '-lobby'
 
@@ -35,6 +36,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
         },
       ],
     }
+    addDataGameSession(Lobby.id, userId, currentUser.nickname as string)
 
     addLobbyToLobbyList(Lobby)
 

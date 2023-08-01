@@ -17,7 +17,7 @@ import {
   ServerToClientEvents,
   SocketData,
 } from './types'
-import { MainAction } from './socket/actions'
+import MainAction from './socket/main'
 
 const app: Application = express()
 
