@@ -1,40 +1,30 @@
 import { GAME_FIELD } from '../constants'
-import { IGameSession } from '../types'
+import { IGameSession, IUser } from '../types'
 
 const gameSession: IGameSession = {}
 
-const addDataGameSession = (
-  lobbyId: string,
-  userId: string,
-  nickname: string
-) => {
+const addGameSession = (lobbyId: string, user: IUser) => {
   if (gameSession[lobbyId] === undefined) {
     gameSession[lobbyId] = {}
   }
-  gameSession[lobbyId][userId] = {
+  gameSession[lobbyId][user._id] = {
     score: 0,
     gameField: GAME_FIELD,
     isReady: false,
-    nickname: nickname,
+    nickname: user.nickname,
   }
 }
 
-const removeDataGameSession = (lobbyId: string, userId: string) => {
-  delete gameSession[lobbyId][userId]
-}
-
-const removeGameSession = (lobbyId: string) => {
-  delete gameSession[lobbyId]
+const removeGameSession = (lobbyId: string, userId?: string) => {
+  if (userId) {
+    delete gameSession[lobbyId][userId]
+  } else {
+    delete gameSession[lobbyId]
+  }
 }
 
 const getGameSession = (lobbyId: string) => {
   return gameSession[lobbyId]
 }
 
-export {
-  gameSession,
-  addDataGameSession,
-  removeDataGameSession,
-  removeGameSession,
-  getGameSession,
-}
+export { gameSession, addGameSession, removeGameSession, getGameSession }

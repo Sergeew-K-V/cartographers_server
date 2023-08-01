@@ -1,9 +1,17 @@
-import { addDataGameSession, removeDataGameSession } from '../../src/store'
+import { addGameSession, removeGameSession } from '../../src/store'
 
-test('addDataGameSession', () => {
-  expect(addDataGameSession('lobbyId', 'userId', 'nickname'))
+test('addGameSession', () => {
+  expect(
+    addGameSession('lobbyId', {
+      _id: '123123',
+      email: 'test@test.ts',
+      nickname: 'nioc',
+      gameStats: { loses: 0, wins: 0, rate: 1000 },
+      rang: 'Common',
+    })
+  )
 })
 
-test('removeDataGameSession', () => {
-  expect(removeDataGameSession('lobbyId', 'userId'))
+test('removeGameSession', () => {
+  expect(removeGameSession('lobbyId', 'userId'))
 })

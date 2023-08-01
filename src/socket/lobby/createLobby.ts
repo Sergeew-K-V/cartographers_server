@@ -1,9 +1,9 @@
-import { IConfiguration, ILobby } from '../../types'
+import { IConfiguration, ILobby, IUser } from '../../types'
 import userModel from '../../models/user.model'
 import {
   addLobbyToLobbyList,
   // addUserToMap,
-  addDataGameSession,
+  addGameSession,
 } from '../../store'
 import { uid } from 'uid'
 
@@ -13,8 +13,17 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
   const currentUser = await userModel.findById(userId)
 
   if (currentUser) {
-    const userId = currentUser._id.toString()
-
+    const user: IUser = {
+      _id: currentUser._id.toString() as string,
+      email: currentUser.email as string,
+      nickname: currentUser.nickname as string,
+      rang: currentUser.rang,
+      gameStats: currentUser.gameStats as {
+        rate: number
+        wins: number
+        loses: number
+      },
+    }
     const LobbyName = (currentUser.nickname as string) + '-lobby'
 
     const Lobby: ILobby = {
@@ -22,21 +31,9 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
       name: LobbyName,
       host: currentUser.nickname as string,
       isStarted: false,
-      userList: [
-        {
-          _id: currentUser._id.toString() as string,
-          email: currentUser.email as string,
-          nickname: currentUser.nickname as string,
-          rang: currentUser.rang,
-          gameStats: currentUser.gameStats as {
-            rate: number
-            wins: number
-            loses: number
-          },
-        },
-      ],
+      userList: [user],
     }
-    addDataGameSession(Lobby.id, userId, currentUser.nickname as string)
+    addGameSession(Lobby.id, user)
 
     addLobbyToLobbyList(Lobby)
 

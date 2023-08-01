@@ -4,7 +4,6 @@ import {
   // removeUserFromMap,
   getLobbyList,
   setLobbyList,
-  removeDataGameSession,
   removeGameSession,
 } from '../../store'
 import { IConfiguration } from '../../types'
@@ -37,7 +36,7 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
         if (isHostOfLobby) {
           currentLobby.host = currentLobby.userList[0].nickname
         }
-        removeDataGameSession(currentLobby.id, userId)
+        removeGameSession(currentLobby.id, userId)
         io.emit('UPDATE_LOBBY', currentLobby)
       }
     }
