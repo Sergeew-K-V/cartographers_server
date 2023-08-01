@@ -1,6 +1,9 @@
 import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
-import { addLobbyToLobbyList, addUserToMap } from '../../store'
+import {
+  addLobbyToLobbyList,
+  // addUserToMap
+} from '../../store'
 import { uid } from 'uid'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
@@ -9,7 +12,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
   const currentUser = await userModel.findById(userId)
 
   if (currentUser) {
-    const userId = currentUser._id.toString()
+    // const userId = currentUser._id.toString()
 
     const LobbyName = (currentUser.nickname as string) + '-lobby'
 
@@ -35,7 +38,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
 
     addLobbyToLobbyList(Lobby)
 
-    addUserToMap(socket.id, userId)
+    // addUserToMap(socket.id, userId)
 
     socket.join(Lobby.id)
 
