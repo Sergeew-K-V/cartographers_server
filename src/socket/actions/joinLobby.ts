@@ -1,6 +1,6 @@
 import { IUser, IConfiguration } from '../../types'
 import {
-  addUserToMap,
+  // addUserToMap,
   findLobbyByLobbyId,
   getLobbyList,
   setLobbyList,
@@ -25,7 +25,7 @@ const joinLobby = async (
 
     if (!isUserAlreadyInLobby && currentLobby.userList.length < 4) {
       socket.join(currentLobby.id)
-      addUserToMap(socket.id, currentUser._id.toString())
+      // addUserToMap(socket.id, currentUser._id.toString())
 
       const user: IUser = {
         email: currentUser.email as string,

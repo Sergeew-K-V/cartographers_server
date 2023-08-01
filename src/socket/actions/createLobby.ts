@@ -1,6 +1,9 @@
 import { IConfiguration, ILobby } from '../../types'
 import userModel from '../../models/user.model'
-import { addLobbyToLobbyList, addUserToMap } from '../../store'
+import {
+  addLobbyToLobbyList,
+  // addUserToMap
+} from '../../store'
 import { uid } from 'uid'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
@@ -35,7 +38,7 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
 
     addLobbyToLobbyList(Lobby)
 
-    addUserToMap(socket.id, userId)
+    // addUserToMap(socket.id, userId)
 
     socket.join(Lobby.id)
 

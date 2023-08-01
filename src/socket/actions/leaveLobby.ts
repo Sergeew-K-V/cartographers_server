@@ -1,7 +1,7 @@
 import {
   removeLobbyByLobbyId,
   findLobbyByUserId,
-  removeUserFromMap,
+  // removeUserFromMap,
   getLobbyList,
   setLobbyList,
 } from '../../store'
@@ -22,7 +22,7 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
         (user) => user._id !== userId
       )
       currentLobby.userList = updatedUserList
-      removeUserFromMap(socket.id, userId)
+      // removeUserFromMap(socket.id, userId)
 
       if (updatedUserList.length === 0) {
         const newLobbies = removeLobbyByLobbyId(lobbies, currentLobby)

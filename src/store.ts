@@ -1,24 +1,24 @@
 import { ILobby } from './types'
 
-let UsersMap: Record<string, string> = {}
+// let UsersMap: Record<string, string> = {}
 let LobbyList: ILobby[] = []
 
-const addUserToMap = (socketId: string, userId: string) => {
-  UsersMap[socketId] = userId
-}
+// const addUserToMap = (socketId: string, userId: string) => {
+//   UsersMap[socketId] = userId
+// }
 
-const removeUserFromMap = (socketId: string, userId: string) => {
-  const updatedMap: Record<string, string> = { ...UsersMap }
+// const removeUserFromMap = (socketId: string, userId: string) => {
+//   const updatedMap: Record<string, string> = { ...UsersMap }
 
-  for (const [key, value] of Object.entries(updatedMap)) {
-    if (key === socketId && value === userId) {
-      delete updatedMap[key]
-      break
-    }
-  }
+//   for (const [key, value] of Object.entries(updatedMap)) {
+//     if (key === socketId && value === userId) {
+//       delete updatedMap[key]
+//       break
+//     }
+//   }
 
-  UsersMap = { ...updatedMap }
-}
+//   UsersMap = { ...updatedMap }
+// }
 
 const findLobbyByLobbyId = (list: ILobby[], lobbyId: string) => {
   const lobby = list.find((lobby) => lobby.id === lobbyId)
@@ -62,9 +62,9 @@ export {
   removeLobbyByLobbyId,
   findLobbyByLobbyId,
   findLobbyByUserId,
-  UsersMap,
-  addUserToMap,
-  removeUserFromMap,
+  // UsersMap,
+  // addUserToMap,
+  // removeUserFromMap,
   addLobbyToLobbyList,
   getLobbyList,
   setLobbyList,
