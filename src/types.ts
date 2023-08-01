@@ -65,6 +65,18 @@ interface IConfiguration {
   socket: AppSocket
   io: IoServerType
 }
+interface UserGameData {
+  nickname: string
+  gameField: number[][]
+  isReady: boolean
+  score: number
+}
+
+interface IGameSession {
+  [lobbyId: string]: {
+    [id: string]: UserGameData
+  }
+}
 
 interface ILobby {
   id: string
@@ -73,7 +85,6 @@ interface ILobby {
   userList: IUser[]
   isStarted: boolean
 }
-
 export {
   SocketEvents,
   IUser,
@@ -85,4 +96,5 @@ export {
   SocketData,
   AppSocket,
   IoServerType,
+  IGameSession,
 }
