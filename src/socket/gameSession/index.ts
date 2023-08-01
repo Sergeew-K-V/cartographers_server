@@ -1,3 +1,3 @@
-import sendingGameSession from './getGameSession'
+import sendingGameSession from './sendingGameSession'
 
 export { sendingGameSession }
