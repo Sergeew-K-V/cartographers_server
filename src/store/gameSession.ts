@@ -8,10 +8,12 @@ const addGameSession = (lobbyId: string, user: IUser) => {
     gameSession[lobbyId] = {}
   }
   gameSession[lobbyId][user._id] = {
-    score: 0,
+    nickname: user.nickname,
     gameField: GAME_FIELD,
     isReady: false,
-    nickname: user.nickname,
+    score: 0,
+    coins: 0,
+    points: [],
   }
 }
 

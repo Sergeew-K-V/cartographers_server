@@ -13,8 +13,8 @@ const MainAction = (socket: AppSocket, io: IoServerType) => {
 
   socket.on('LEAVE_LOBBY', (userId) => leaveLobby(configuration, userId))
 
-  socket.on('GET_GAME_SESSION', (lobbyId, userId) =>
-    sendingGameSession(lobbyId)
+  socket.on('GET_GAME_SESSION', (lobbyId) =>
+    sendingGameSession(configuration, lobbyId)
   )
 
   socket.on('DISCONNECT', () => disconnectSocket(configuration))
