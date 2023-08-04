@@ -38,7 +38,7 @@ interface ServerToClientEvents {
   USER_LEAVE_LOBBY: (lobby: ILobby) => void
   UPDATE_LOBBY: (lobby: ILobby) => void
 
-  GAME_SESSION_CREATED: (session: ILobbySession) => void
+  GAME_SESSION_CREATED: (session: ILobbyPlayerMap) => void
 }
 
 interface ClientToServerEvents {
@@ -77,29 +77,29 @@ interface IFieldCell {
   image: string
 }
 
-interface UserGameData {
-  nickname: string
-  gameField: IFieldCell[][]
-  isReady: boolean
-  score: number
-  coins: number
-  points: number[][]
-}
-
-interface IGameSession {
-  [lobbyId: string]: ILobbySession
-}
-
-interface ILobbySession {
-  [userId: string]: UserGameData
-}
-
 interface ILobby {
   id: string
   name: string
   host: string
   userList: IUser[]
   isStarted: boolean
+}
+
+interface IGameSessions {
+  [lobbyId: string]: ILobbyPlayerMap
+}
+
+interface ILobbyPlayerMap {
+  [userId: string]: IUserGameData
+}
+
+interface IUserGameData {
+  nickname: string
+  gameField: IFieldCell[][]
+  isReady: boolean
+  score: number
+  coins: number
+  points: number[][]
 }
 
 export {
@@ -113,6 +113,6 @@ export {
   SocketData,
   AppSocket,
   IoServerType,
-  IGameSession,
+  IGameSessions,
   IFieldCell,
 }

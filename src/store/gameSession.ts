@@ -1,7 +1,7 @@
 import { GAME_FIELD } from '../constants'
-import { IGameSession, IUser } from '../types'
+import { IGameSessions, IUser } from '../types'
 
-const gameSession: IGameSession = {}
+const gameSession: IGameSessions = {}
 
 const addGameSession = (lobbyId: string, user: IUser) => {
   if (gameSession[lobbyId] === undefined) {
@@ -19,7 +19,7 @@ const addGameSession = (lobbyId: string, user: IUser) => {
 
 const removeGameSession = (lobbyId: string, userId?: string) => {
   if (userId) {
-    delete gameSession[lobbyId][userId]
+    delete gameSession[lobbyId]
   } else {
     delete gameSession[lobbyId]
   }
