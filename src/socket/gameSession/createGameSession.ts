@@ -23,12 +23,17 @@ const createGameSession = async (
         loses: number
       },
     }
+    const isExistSession = getGameSession(lobbyId)
 
     addGameSession(lobbyId, user)
 
     const session = getGameSession(lobbyId)
 
-    socket.emit('GAME_SESSION_CREATED', session)
+    if (isExistSession) {
+      socket.emit('UPDATE_GAME_SESSION', session)
+    } else {
+      socket.emit('GAME_SESSION_CREATED', session)
+    }
   }
 }
 

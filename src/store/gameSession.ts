@@ -15,13 +15,16 @@ const addGameSession = (lobbyId: string, user: IUser) => {
     coins: 0,
     points: [],
   }
+  console.log('addGameSession ~ gameSession[lobbyId]:', gameSession[lobbyId])
 }
 
 const removeGameSession = (lobbyId: string, userId: string) => {
-  if (Object.keys(gameSession[lobbyId]).length === 1) {
-    delete gameSession[lobbyId]
-  } else {
-    delete gameSession[lobbyId][userId]
+  if (gameSession[lobbyId]) {
+    if (Object.keys(gameSession[lobbyId]).length === 1) {
+      delete gameSession[lobbyId]
+    } else {
+      delete gameSession[lobbyId][userId]
+    }
   }
 }
 
