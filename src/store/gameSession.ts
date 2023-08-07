@@ -15,7 +15,6 @@ const addGameSession = (lobbyId: string, user: IUser) => {
     coins: 0,
     points: [],
   }
-  console.log('addGameSession ~ gameSession[lobbyId]:', gameSession[lobbyId])
 }
 
 const removeGameSession = (lobbyId: string, userId: string) => {
