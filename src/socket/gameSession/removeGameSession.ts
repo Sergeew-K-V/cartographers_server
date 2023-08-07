@@ -1,4 +1,3 @@
-import userModel from '../../models/user.model'
 import { getGameSession, removeGameSession } from '../../store'
 import { IConfiguration } from '../../types'
 
@@ -7,13 +6,13 @@ const onRemoveGameSession = async (
   lobbyId: string,
   userId: string
 ) => {
-  const { socket } = configuration
+  const { io } = configuration
 
   removeGameSession(lobbyId, userId)
 
   const session = getGameSession(lobbyId)
 
-  socket.emit('UPDATE_GAME_SESSION', session)
+  io.to(lobbyId).emit('UPDATE_GAME_SESSION', session)
 }
 
 export default onRemoveGameSession

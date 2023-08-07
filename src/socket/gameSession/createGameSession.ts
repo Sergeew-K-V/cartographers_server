@@ -7,7 +7,7 @@ const createGameSession = async (
   lobbyId: string,
   userId: string
 ) => {
-  const { socket } = configuration
+  const { socket, io } = configuration
 
   const currentUser = await userModel.findById(userId)
 
@@ -30,7 +30,7 @@ const createGameSession = async (
     const session = getGameSession(lobbyId)
 
     if (isExistSession) {
-      socket.emit('UPDATE_GAME_SESSION', session)
+      io.to(lobbyId).emit('UPDATE_GAME_SESSION', session)
     } else {
       socket.emit('GAME_SESSION_CREATED', session)
     }
