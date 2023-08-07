@@ -1,10 +1,6 @@
 import { IConfiguration, ILobby, IUser } from '../../types'
 import userModel from '../../models/user.model'
-import {
-  addLobbyToLobbyList,
-  // addUserToMap,
-  addGameSession,
-} from '../../store'
+import { addLobbyToLobbyList } from '../../store'
 import { uid } from 'uid'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
@@ -33,11 +29,8 @@ const createLobby = async (configuration: IConfiguration, userId: string) => {
       isStarted: false,
       userList: [user],
     }
-    addGameSession(Lobby.id, user)
 
     addLobbyToLobbyList(Lobby)
-
-    // addUserToMap(socket.id, userId)
 
     socket.join(Lobby.id)
 

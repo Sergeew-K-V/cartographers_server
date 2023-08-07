@@ -1,22 +1,4 @@
 import { Socket, Server } from 'socket.io'
-import { DefaultEventsMap } from 'socket.io/dist/typed-events'
-
-enum SocketEvents {
-  CONNECTION = 'connection',
-  DISCONNECT = 'disconnect',
-
-  GET_GAME_SESSION = 'getGameSession',
-
-  JOIN_LOBBY = 'joinLobby',
-  LEAVE_LOBBY = 'leaveLobby',
-
-  LOBBY_CREATED = 'lobbyCreated',
-  CREATE_LOBBY = 'createLobby',
-
-  USER_LEAVE_LOBBY = 'userLeaveLobby',
-  UPDATE_LOBBY = 'lobbyUpdate',
-  DELETE_LOBBY = 'deleteLobby',
-}
 
 type AppSocket = Socket<
   ClientToServerEvents,
@@ -39,6 +21,7 @@ interface ServerToClientEvents {
   UPDATE_LOBBY: (lobby: ILobby) => void
 
   GAME_SESSION_CREATED: (session: ILobbyPlayerMap) => void
+  UPDATE_GAME_SESSION: (session: ILobbyPlayerMap) => void
 }
 
 interface ClientToServerEvents {
@@ -48,7 +31,8 @@ interface ClientToServerEvents {
   JOIN_LOBBY: (lobbyId: string, userId: string) => void
   LEAVE_LOBBY: (userId: string) => void
 
-  GET_GAME_SESSION: (lobbyId: string) => void
+  CREATE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
+  REMOVE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
 }
 
 interface InterServerEvents {}
@@ -103,7 +87,6 @@ interface IUserGameData {
 }
 
 export {
-  SocketEvents,
   IUser,
   ILobby,
   IConfiguration,

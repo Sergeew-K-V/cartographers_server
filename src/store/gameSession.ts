@@ -17,11 +17,11 @@ const addGameSession = (lobbyId: string, user: IUser) => {
   }
 }
 
-const removeGameSession = (lobbyId: string, userId?: string) => {
-  if (userId) {
+const removeGameSession = (lobbyId: string, userId: string) => {
+  if (Object.keys(gameSession[lobbyId]).length === 1) {
     delete gameSession[lobbyId]
   } else {
-    delete gameSession[lobbyId]
+    delete gameSession[lobbyId][userId]
   }
 }
 

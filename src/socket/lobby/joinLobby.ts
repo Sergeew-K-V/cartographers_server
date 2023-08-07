@@ -1,11 +1,5 @@
 import { IUser, IConfiguration } from '../../types'
-import {
-  addGameSession,
-  // addUserToMap,
-  findLobbyByLobbyId,
-  getLobbyList,
-  setLobbyList,
-} from '../../store'
+import { findLobbyByLobbyId, getLobbyList, setLobbyList } from '../../store'
 import userModel from '../../models/user.model'
 
 const joinLobby = async (
@@ -26,7 +20,6 @@ const joinLobby = async (
 
     if (!isUserAlreadyInLobby && currentLobby.userList.length < 4) {
       socket.join(currentLobby.id)
-      // addUserToMap(socket.id, currentUser._id.toString())
 
       const user: IUser = {
         email: currentUser.email as string,
@@ -42,7 +35,6 @@ const joinLobby = async (
 
       currentLobby.userList.push(user)
       setLobbyList(lobbies)
-      addGameSession(currentLobby.id, user)
       io.emit('UPDATE_LOBBY', currentLobby)
     }
   }

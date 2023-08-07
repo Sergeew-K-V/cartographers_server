@@ -1,3 +1,4 @@
-import sendingGameSession from './sendingGameSession'
+import createGameSession from './createGameSession'
+import removeGameSession from './removeGameSession'
 
-export { sendingGameSession }
+export { createGameSession, removeGameSession }

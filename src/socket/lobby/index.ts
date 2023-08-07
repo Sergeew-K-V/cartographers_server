@@ -1,5 +1,5 @@
 import createLobby from './createLobby'
-import disconnectSocket from './disconnectSocket'
+import disconnectSocket from '../disconnectSocket'
 import joinLobby from './joinLobby'
 import leaveLobby from './leaveLobby'
 
