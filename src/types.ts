@@ -33,6 +33,7 @@ interface ClientToServerEvents {
 
   CREATE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REMOVE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
+  REROLL_POINT_CARDS: (lobbyId: string, userId: string) => void
 }
 
 interface InterServerEvents {}
