@@ -74,6 +74,9 @@ interface IGameSession {
   rules: string[]
   winner: string
   time: number
+  remainingCards: string[]
+  playedCards: string[]
+  enemyCards: string[]
   players: IUserGameData[]
 }
 

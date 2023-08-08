@@ -1,5 +1,55 @@
 import { IFieldCell } from '../types'
 
+const GAME_POINTS_CARDS = {
+  city: [
+    '/images/points_card/city_1.png',
+    '/images/points_card/city_2.png',
+    '/images/points_card/city_3.png',
+    '/images/points_card/city_4.png',
+  ],
+  wood: [
+    '/images/points_card/wood_1.png',
+    '/images/points_card/wood_2.png',
+    '/images/points_card/wood_3.png',
+    '/images/points_card/wood_4.png',
+  ],
+  fields: [
+    '/images/points_card/fields_1.png',
+    '/images/points_card/fields_2.png',
+    '/images/points_card/fields_3.png',
+    '/images/points_card/fields_4.png',
+  ],
+  form: [
+    '/images/points_card/form_1.png',
+    '/images/points_card/form_2.png',
+    '/images/points_card/form_3.png',
+    '/images/points_card/form_4.png',
+  ],
+}
+
+const DECK_OF_CARDS = [
+  '/images/cards/cards_1.png',
+  '/images/cards/cards_2.png',
+  '/images/cards/cards_3.png',
+  '/images/cards/cards_4.png',
+  '/images/cards/cards_5.png',
+  '/images/cards/cards_6.png',
+  '/images/cards/cards_7.png',
+  '/images/cards/cards_8.png',
+  '/images/cards/cards_9.png',
+  '/images/cards/cards_10.png',
+  '/images/cards/cards_11.png',
+  '/images/cards/cards_12.png',
+  '/images/cards/cards_13.png',
+]
+
+const DECK_OF_ENEMY_CARDS = [
+  '/images/cards/enemy_card_1.png',
+  '/images/cards/enemy_card_2.png',
+  '/images/cards/enemy_card_3.png',
+  '/images/cards/enemy_card_4.png',
+]
+
 const GAME_FIELD: IFieldCell[][] = [
   [
     { id: 1, image: '/images/other/cell.png' },
@@ -146,4 +196,4 @@ const GAME_FIELD: IFieldCell[][] = [
   ],
 ]
 
-export { GAME_FIELD }
+export { GAME_FIELD, GAME_POINTS_CARDS, DECK_OF_CARDS, DECK_OF_ENEMY_CARDS }

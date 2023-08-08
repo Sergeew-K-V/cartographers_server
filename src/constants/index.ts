@@ -7,7 +7,12 @@ import {
   NOT_FOUND,
   CREATED,
 } from './StatusCodes'
-import { GAME_FIELD } from './gameSession'
+import {
+  GAME_FIELD,
+  GAME_POINTS_CARDS,
+  DECK_OF_CARDS,
+  DECK_OF_ENEMY_CARDS,
+} from './gameSession'
 
 export {
   OK,
@@ -18,4 +23,7 @@ export {
   FORBIDDEN,
   NOT_FOUND,
   GAME_FIELD,
+  GAME_POINTS_CARDS,
+  DECK_OF_CARDS,
+  DECK_OF_ENEMY_CARDS,
 }

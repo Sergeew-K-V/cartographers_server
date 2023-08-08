@@ -1,4 +1,5 @@
-import { GAME_FIELD } from '../../constants'
+import { DECK_OF_CARDS, DECK_OF_ENEMY_CARDS, GAME_FIELD } from '../../constants'
+import { getPointCards } from '../../helpers'
 import userModel from '../../models/user.model'
 import { setGameSessionList, getGameSessionList } from '../../store'
 import { IConfiguration, IGameSession } from '../../types'
@@ -57,9 +58,12 @@ const createGameSession = async (
     } else {
       const gameSession: IGameSession = {
         id: lobbyId,
-        rules: [],
+        rules: getPointCards(),
         time: 0,
         winner: '',
+        remainingCards: DECK_OF_CARDS,
+        enemyCards: DECK_OF_ENEMY_CARDS,
+        playedCards: [],
         players: [player],
       }
 
