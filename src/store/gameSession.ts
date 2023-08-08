@@ -1,34 +1,13 @@
-import { GAME_FIELD } from '../constants'
-import { IGameSessions, IUser } from '../types'
+import { IGameSession } from '../types'
 
-const gameSession: IGameSessions = {}
+let gameSessionList: IGameSession[] = []
 
-const addGameSession = (lobbyId: string, user: IUser) => {
-  if (gameSession[lobbyId] === undefined) {
-    gameSession[lobbyId] = {}
-  }
-  gameSession[lobbyId][user._id] = {
-    nickname: user.nickname,
-    gameField: GAME_FIELD,
-    isReady: false,
-    score: 0,
-    coins: 0,
-    points: [],
-  }
+const setGameSessionList = (newGameSessionList: IGameSession[]) => {
+  gameSessionList = newGameSessionList
 }
 
-const removeGameSession = (lobbyId: string, userId: string) => {
-  if (gameSession[lobbyId]) {
-    if (Object.keys(gameSession[lobbyId]).length === 1) {
-      delete gameSession[lobbyId]
-    } else {
-      delete gameSession[lobbyId][userId]
-    }
-  }
+const getGameSessionList = () => {
+  return gameSessionList
 }
 
-const getGameSession = (lobbyId: string) => {
-  return gameSession[lobbyId]
-}
-
-export { gameSession, addGameSession, removeGameSession, getGameSession }
+export { setGameSessionList, getGameSessionList }
