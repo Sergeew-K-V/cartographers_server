@@ -19,6 +19,7 @@ const createGameSession = async (
       gameField: GAME_FIELD,
       isReady: false,
       score: 0,
+      rang: currentUser.rang as string,
       coins: 0,
       points: [],
     }
