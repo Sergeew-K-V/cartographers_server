@@ -8,7 +8,7 @@ const createGameSession = async (
   lobbyId: string,
   userId: string
 ) => {
-  const { io } = configuration
+  const { io, socket } = configuration
   const gameSessionList = getGameSessionList()
   const currentUser = await userModel.findById(userId)
 
@@ -28,8 +28,18 @@ const createGameSession = async (
         return session
       }
     })
-
     if (existingGameSession) {
+      const isExistPlayer = existingGameSession.players.find(
+        (player) => player._id === userId
+      )
+
+      //refresh browser page, we are returning your user to lobby and give a session
+      if (isExistPlayer) {
+        socket.join(lobbyId)
+        io.to(lobbyId).emit('GAME_SESSION_CREATED', existingGameSession)
+        return
+      }
+
       existingGameSession.players.push(player)
 
       const updatedGameSessionList = gameSessionList.map((session) => {
