@@ -9,7 +9,8 @@ const getPointCards = () => {
 
   Object.values(GAME_POINTS_CARDS).forEach((listOfTypeRule) => {
     const randomCard = getRandomCard(listOfTypeRule.length)
-    gameSessionPointsCards.push(listOfTypeRule[randomCard])
+    const randomPosition = getRandomCard(gameSessionPointsCards.length + 1)
+    gameSessionPointsCards.splice(randomPosition, 0, listOfTypeRule[randomCard])
   })
 
   return gameSessionPointsCards
