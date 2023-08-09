@@ -74,7 +74,9 @@ interface IGameSession {
   id: string
   rules: string[]
   winner: string
+  host: string
   time: number
+  currentCard: string | null
   remainingCards: string[]
   playedCards: string[]
   enemyCards: string[]

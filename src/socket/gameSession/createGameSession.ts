@@ -61,6 +61,8 @@ const createGameSession = async (
         rules: getPointCards(),
         time: 0,
         winner: '',
+        host: player.nickname,
+        currentCard: null,
         remainingCards: DECK_OF_CARDS,
         enemyCards: DECK_OF_ENEMY_CARDS,
         playedCards: [],
