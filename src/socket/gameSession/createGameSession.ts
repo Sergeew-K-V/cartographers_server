@@ -11,7 +11,7 @@ import { IConfiguration } from '../../types'
 
 const createGameSession = async (
   configuration: IConfiguration,
-  lobbyId: string,
+  sessionId: string,
   userId: string
 ) => {
   const { io, socket } = configuration
@@ -20,15 +20,15 @@ const createGameSession = async (
   if (currentUser) {
     const player = initNewPlayer(currentUser)
 
-    const targetSession = findGameSessionById(lobbyId)
+    const targetSession = findGameSessionById(sessionId)
 
     if (targetSession) {
       const targetPlayer = findPlayerInSessionById(targetSession, userId)
 
       //refresh browser page, we are returning your user to lobby and give a session
       if (targetPlayer) {
-        socket.join(lobbyId)
-        io.to(lobbyId).emit('GAME_SESSION_CREATED', targetSession)
+        socket.join(sessionId)
+        io.to(sessionId).emit('GAME_SESSION_CREATED', targetSession)
         return
       }
 
@@ -36,13 +36,13 @@ const createGameSession = async (
 
       updateSessionList(targetSession)
 
-      io.to(lobbyId).emit('GAME_SESSION_UPDATED', targetSession)
+      io.to(sessionId).emit('GAME_SESSION_UPDATED', targetSession)
     } else {
-      const gameSession = initNewGameSession(lobbyId, player)
+      const gameSession = initNewGameSession(sessionId, player)
 
       addGameSession(gameSession)
 
-      io.to(lobbyId).emit('GAME_SESSION_CREATED', gameSession)
+      io.to(sessionId).emit('GAME_SESSION_CREATED', gameSession)
     }
   }
 }

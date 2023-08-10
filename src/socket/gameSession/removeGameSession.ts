@@ -8,16 +8,16 @@ import { IConfiguration } from '../../types'
 
 const removeGameSession = async (
   configuration: IConfiguration,
-  lobbyId: string,
+  sessionId: string,
   userId: string
 ) => {
   const { io } = configuration
 
-  const currentGameSession = findGameSessionById(lobbyId)
+  const currentGameSession = findGameSessionById(sessionId)
 
   if (currentGameSession) {
     if (currentGameSession.players.length === 1) {
-      removeSessionById(lobbyId)
+      removeSessionById(sessionId)
     } else {
       const updatedPlayerList = removePlayerFromSessionById(
         currentGameSession,
@@ -28,7 +28,7 @@ const removeGameSession = async (
       currentGameSession.host = updatedPlayerList[0].nickname
 
       updateSessionList(currentGameSession)
-      io.to(lobbyId).emit('GAME_SESSION_UPDATED', currentGameSession)
+      io.to(sessionId).emit('GAME_SESSION_UPDATED', currentGameSession)
     }
   }
 }
