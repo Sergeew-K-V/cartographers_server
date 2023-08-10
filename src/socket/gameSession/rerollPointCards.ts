@@ -1,21 +1,16 @@
 import { getPointCards } from '../../helpers'
-import { getGameSessionList } from '../../store'
+import { findGameSessionById, updateSessionList } from '../../store'
 import { IConfiguration } from '../../types'
 
-const rerollPointCards = (
-  configuration: IConfiguration,
-  lobbyId: string,
-  userId: string
-) => {
+const rerollPointCards = (configuration: IConfiguration, lobbyId: string) => {
   const { io } = configuration
-  const gameSessionList = getGameSessionList()
 
-  const targetSession = gameSessionList.find(
-    (session) => session.id === lobbyId
-  )
+  const targetSession = findGameSessionById(lobbyId)
 
   if (targetSession) {
     targetSession.rules = [...getPointCards()]
+
+    updateSessionList(targetSession)
 
     io.to(lobbyId).emit('GAME_SESSION_UPDATED', targetSession)
   }

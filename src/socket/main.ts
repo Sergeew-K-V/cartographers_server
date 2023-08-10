@@ -26,7 +26,7 @@ const MainAction = (socket: AppSocket, io: IoServerType) => {
   )
 
   socket.on('REROLL_POINT_CARDS', (lobbyId, userId) =>
-    rerollPointCards(configuration, lobbyId, userId)
+    rerollPointCards(configuration, lobbyId)
   )
 
   socket.on('DISCONNECT', () => disconnectSocket(configuration))

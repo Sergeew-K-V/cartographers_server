@@ -1,36 +1,38 @@
 import {
-  removeLobbyByLobbyId,
   findLobbyByUserId,
-  getLobbyList,
-  setLobbyList,
-  removeGameSession,
+  findUserInLobbyByUserId,
+  removeLobbyByLobbyId,
+  removeUserFromLobby,
+  updateLobbyList,
 } from '../../store'
 import { IConfiguration } from '../../types'
 
 const leaveLobby = (configuration: IConfiguration, userId: string) => {
-  let { io } = configuration
-  const lobbies = getLobbyList()
-  const currentLobby = findLobbyByUserId(lobbies, userId)
-  if (currentLobby) {
-    const currentUser = currentLobby?.userList.find((user) => {
-      if (user._id === userId) return user
-    })
+  const { io } = configuration
 
-    if (currentUser) {
-      const isHostOfLobby = currentLobby.host === currentUser.nickname
-      const updatedUserList = currentLobby.userList.filter(
-        (user) => user._id !== userId
-      )
-      currentLobby.userList = updatedUserList
-      if (updatedUserList.length === 0) {
-        const newLobbies = removeLobbyByLobbyId(lobbies, currentLobby)
-        setLobbyList(newLobbies)
-        io.emit('DELETE_LOBBY', currentLobby)
+  const targetLobby = findLobbyByUserId(userId)
+  if (targetLobby) {
+    const targetUser = findUserInLobbyByUserId(targetLobby, userId)
+
+    if (targetUser) {
+      if (targetLobby.userList.length === 1) {
+        removeLobbyByLobbyId(targetLobby)
+        io.emit('LOBBY_DELETED', targetLobby)
       } else {
+        const isHostOfLobby = targetLobby.host === targetUser.nickname
+
+        const updatedPlayerList = removeUserFromLobby(
+          targetLobby,
+          targetUser._id
+        )
+
+        targetLobby.userList = updatedPlayerList
         if (isHostOfLobby) {
-          currentLobby.host = currentLobby.userList[0].nickname
+          targetLobby.host = targetLobby.userList[0].nickname
         }
-        io.emit('UPDATE_LOBBY', currentLobby)
+
+        updateLobbyList(targetLobby)
+        io.emit('LOBBY_UPDATED', targetLobby)
       }
     }
   }

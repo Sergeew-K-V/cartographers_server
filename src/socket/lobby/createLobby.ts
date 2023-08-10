@@ -1,34 +1,16 @@
-import { IConfiguration, ILobby, IUser } from '../../types'
+import { IConfiguration } from '../../types'
 import userModel from '../../models/user.model'
-import { addLobbyToLobbyList } from '../../store'
-import { uid } from 'uid'
+import { addLobbyToLobbyList, initNewLobby, initNewUser } from '../../store'
 
 const createLobby = async (configuration: IConfiguration, userId: string) => {
   const { socket, io } = configuration
 
-  const currentUser = await userModel.findById(userId)
+  const targetUser = await userModel.findById(userId)
 
-  if (currentUser) {
-    const user: IUser = {
-      _id: currentUser._id.toString() as string,
-      email: currentUser.email as string,
-      nickname: currentUser.nickname as string,
-      rang: currentUser.rang,
-      gameStats: currentUser.gameStats as {
-        rate: number
-        wins: number
-        loses: number
-      },
-    }
-    const LobbyName = (currentUser.nickname as string) + '-lobby'
+  if (targetUser) {
+    const user = initNewUser(targetUser)
 
-    const Lobby: ILobby = {
-      id: uid(),
-      name: LobbyName,
-      host: currentUser.nickname as string,
-      isStarted: false,
-      userList: [user],
-    }
+    const Lobby = initNewLobby(user)
 
     addLobbyToLobbyList(Lobby)
 

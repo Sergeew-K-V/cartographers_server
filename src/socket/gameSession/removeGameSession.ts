@@ -1,45 +1,35 @@
-import { getGameSessionList, setGameSessionList } from '../../store'
+import {
+  findGameSessionById,
+  removePlayerFromSessionById,
+  removeSessionById,
+  updateSessionList,
+} from '../../store'
 import { IConfiguration } from '../../types'
 
-const onRemoveGameSession = async (
+const removeGameSession = async (
   configuration: IConfiguration,
   lobbyId: string,
   userId: string
 ) => {
   const { io } = configuration
-  const gameSessionList = getGameSessionList()
 
-  const currentGameSession = gameSessionList.find(
-    (session) => session.id === lobbyId
-  )
+  const currentGameSession = findGameSessionById(lobbyId)
 
   if (currentGameSession) {
     if (currentGameSession.players.length === 1) {
-      const updatedGameSessionList = gameSessionList.filter(
-        (session) => session.id !== lobbyId
-      )
-
-      setGameSessionList(updatedGameSessionList)
+      removeSessionById(lobbyId)
     } else {
-      const updatedPlayerList = currentGameSession.players.filter(
-        (player) => player._id !== userId
+      const updatedPlayerList = removePlayerFromSessionById(
+        currentGameSession,
+        userId
       )
 
       currentGameSession.players = updatedPlayerList
 
-      const updatedSessionList = gameSessionList.map((session) => {
-        if (session.id === currentGameSession.id) {
-          return currentGameSession
-        } else {
-          return session
-        }
-      })
-
-      setGameSessionList(updatedSessionList)
-
+      updateSessionList(currentGameSession)
       io.to(lobbyId).emit('GAME_SESSION_UPDATED', currentGameSession)
     }
   }
 }
 
-export default onRemoveGameSession
+export default removeGameSession

@@ -1,6 +1,11 @@
-import { IUser, IConfiguration } from '../../types'
-import { findLobbyByLobbyId, getLobbyList, setLobbyList } from '../../store'
+import { IConfiguration } from '../../types'
 import userModel from '../../models/user.model'
+import {
+  findLobbyByLobbyId,
+  findUserInLobbyByUserId,
+  initNewUser,
+  updateLobbyList,
+} from '../../store'
 
 const joinLobby = async (
   configuration: IConfiguration,
@@ -8,34 +13,22 @@ const joinLobby = async (
   userId: string
 ) => {
   const { socket, io } = configuration
-  const lobbies = getLobbyList()
-  const currentLobby = findLobbyByLobbyId(lobbies, lobbyId)
+  const targetUser = await userModel.findById(userId)
+  const targetLobby = findLobbyByLobbyId(lobbyId)
 
-  const currentUser = await userModel.findById(userId)
+  if (targetLobby && targetUser) {
+    const isUserInLobby = findUserInLobbyByUserId(targetLobby, userId)
 
-  if (currentLobby && currentUser) {
-    const isUserAlreadyInLobby = currentLobby.userList.find(
-      (el) => el.nickname === currentUser.nickname
-    )
+    //in future need to disable btn in client for connection
+    if (!isUserInLobby && targetLobby.userList.length < 4) {
+      socket.join(targetLobby.id)
 
-    if (!isUserAlreadyInLobby && currentLobby.userList.length < 4) {
-      socket.join(currentLobby.id)
+      const user = initNewUser(targetUser)
 
-      const user: IUser = {
-        email: currentUser.email as string,
-        nickname: currentUser.nickname as string,
-        _id: currentUser._id.toString() as string,
-        gameStats: currentUser.gameStats as {
-          rate: number
-          wins: number
-          loses: number
-        },
-        rang: currentUser.rang,
-      }
+      targetLobby.userList.push(user)
+      updateLobbyList(targetLobby)
 
-      currentLobby.userList.push(user)
-      setLobbyList(lobbies)
-      io.emit('UPDATE_LOBBY', currentLobby)
+      io.emit('LOBBY_UPDATED', targetLobby)
     }
   }
 }

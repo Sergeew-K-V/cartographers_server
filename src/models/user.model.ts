@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose'
+import { IUser } from '../types'
 
-const User = new Schema({
+const User = new Schema<IUser & { password: string }>({
   email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   nickname: { type: String },

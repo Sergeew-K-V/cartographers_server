@@ -1,13 +1,73 @@
-import { IGameSession } from '../types'
+import { DECK_OF_CARDS, DECK_OF_ENEMY_CARDS, GAME_FIELD } from '../constants'
+import { getPointCards } from '../helpers'
+import { IGameSession, IUser, IUserGameData } from '../types'
 
 let gameSessionList: IGameSession[] = []
 
-const setGameSessionList = (newGameSessionList: IGameSession[]) => {
-  gameSessionList = newGameSessionList
+const findGameSessionById = (lobbyId: string) => {
+  return gameSessionList.find((session) => session.id === lobbyId)
 }
 
-const getGameSessionList = () => {
-  return gameSessionList
+const removeSessionById = (lobbyId: string) => {
+  gameSessionList = gameSessionList.filter((session) => session.id !== lobbyId)
 }
 
-export { setGameSessionList, getGameSessionList }
+const removePlayerFromSessionById = (session: IGameSession, userId: string) => {
+  return session.players.filter((player) => player._id !== userId)
+}
+
+const findPlayerInSessionById = (session: IGameSession, userId: string) => {
+  return session.players.find((player) => player._id === userId)
+}
+
+const updateSessionList = (updatedSession: IGameSession) => {
+  gameSessionList = gameSessionList.map((session) =>
+    session.id === updatedSession.id ? updatedSession : session
+  )
+}
+
+const addGameSession = (newGameSession: IGameSession) => {
+  gameSessionList.push(newGameSession)
+}
+
+const initNewPlayer = (user: IUser): IUserGameData => {
+  return {
+    _id: user._id.toString(),
+    nickname: user.nickname as string,
+    gameField: GAME_FIELD,
+    isReady: false,
+    score: 0,
+    rang: user.rang as string,
+    coins: 0,
+    points: [],
+  }
+}
+
+const initNewGameSession = (
+  lobbyId: string,
+  player: IUserGameData
+): IGameSession => {
+  return {
+    id: lobbyId,
+    rules: getPointCards(),
+    time: 0,
+    winner: '',
+    host: player.nickname,
+    currentCard: null,
+    remainingCards: DECK_OF_CARDS,
+    enemyCards: DECK_OF_ENEMY_CARDS,
+    playedCards: [],
+    players: [player],
+  }
+}
+
+export {
+  findGameSessionById,
+  removeSessionById,
+  removePlayerFromSessionById,
+  updateSessionList,
+  findPlayerInSessionById,
+  addGameSession,
+  initNewPlayer,
+  initNewGameSession,
+}

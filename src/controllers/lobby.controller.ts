@@ -5,9 +5,8 @@ import { getLobbyList, findLobbyByLobbyId } from '../store'
 const getLobby = async (req: Request, res: Response) => {
   try {
     const { _id } = req.params
-    const lobbies = getLobbyList()
 
-    const lobby = findLobbyByLobbyId(lobbies, _id)
+    const lobby = findLobbyByLobbyId(_id)
 
     return res.json(lobby)
   } catch (error) {
