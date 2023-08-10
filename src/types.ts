@@ -33,6 +33,9 @@ interface ClientToServerEvents {
   CREATE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REMOVE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REROLL_POINT_CARDS: (lobbyId: string, userId: string) => void
+
+  START_GAME: () => void
+  END_GAME: () => void
 }
 
 interface InterServerEvents {}
@@ -75,11 +78,12 @@ interface IGameSession {
   winner: string
   host: string
   time: number
+  players: IUserGameData[]
+  isStarted: boolean
   currentCard: string | null
   remainingCards: string[]
   playedCards: string[]
   enemyCards: string[]
-  players: IUserGameData[]
 }
 
 interface IUserGameData {
