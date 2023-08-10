@@ -25,6 +25,7 @@ const removeGameSession = async (
       )
 
       currentGameSession.players = updatedPlayerList
+      currentGameSession.host = updatedPlayerList[0].nickname
 
       updateSessionList(currentGameSession)
       io.to(lobbyId).emit('GAME_SESSION_UPDATED', currentGameSession)
