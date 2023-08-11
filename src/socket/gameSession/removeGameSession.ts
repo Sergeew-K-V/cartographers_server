@@ -13,22 +13,26 @@ const removeGameSession = async (
 ) => {
   const { io } = configuration
 
-  const currentGameSession = findGameSessionById(sessionId)
+  const targetSession = findGameSessionById(sessionId)
 
-  if (currentGameSession) {
-    if (currentGameSession.players.length === 1) {
+  if (targetSession) {
+    if (targetSession.players.length === 1) {
       removeSessionById(sessionId)
     } else {
       const updatedPlayerList = removePlayerFromSessionById(
-        currentGameSession,
+        targetSession,
         userId
       )
 
-      currentGameSession.players = updatedPlayerList
-      currentGameSession.host = updatedPlayerList[0].nickname
+      targetSession.players = updatedPlayerList
+      targetSession.host = updatedPlayerList[0].nickname
 
-      updateSessionList(currentGameSession)
-      io.to(sessionId).emit('GAME_SESSION_UPDATED', currentGameSession)
+      updateSessionList(targetSession)
+
+      io.to(sessionId).emit('GAME_SESSION_UPDATED', {
+        host: targetSession.host,
+        players: targetSession.players,
+      })
     }
   }
 }

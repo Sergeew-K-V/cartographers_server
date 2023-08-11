@@ -19,7 +19,7 @@ const joinLobby = async (
   if (targetLobby && targetUser) {
     const isUserInLobby = findUserInLobbyByUserId(targetLobby, userId)
 
-    //in future need to disable btn in client for connection
+    //in future need to disable btn in client for connection to room
     if (!isUserInLobby && targetLobby.userList.length < 4) {
       socket.join(targetLobby.id)
 
@@ -28,7 +28,9 @@ const joinLobby = async (
       targetLobby.userList.push(user)
       updateLobbyList(targetLobby)
 
-      io.emit('LOBBY_UPDATED', targetLobby)
+      io.emit('LOBBY_UPDATED', targetLobby.id, {
+        userList: targetLobby.userList,
+      })
     }
   }
 }

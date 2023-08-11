@@ -15,10 +15,10 @@ const createGameSession = async (
   userId: string
 ) => {
   const { io, socket } = configuration
-  const currentUser = await userModel.findById(userId)
+  const targetUser = await userModel.findById(userId)
 
-  if (currentUser) {
-    const player = initNewPlayer(currentUser)
+  if (targetUser) {
+    const player = initNewPlayer(targetUser)
 
     const targetSession = findGameSessionById(sessionId)
 
@@ -36,7 +36,11 @@ const createGameSession = async (
 
       updateSessionList(targetSession)
 
-      io.to(sessionId).emit('GAME_SESSION_UPDATED', targetSession)
+      socket.emit('GAME_SESSION_CREATED', targetSession)
+
+      io.to(sessionId).emit('GAME_SESSION_UPDATED', {
+        players: targetSession.players,
+      })
     } else {
       const gameSession = initNewGameSession(sessionId, player)
 

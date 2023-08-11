@@ -12,7 +12,9 @@ const rerollPointCards = (configuration: IConfiguration, sessionId: string) => {
 
     updateSessionList(targetSession)
 
-    io.to(sessionId).emit('GAME_SESSION_UPDATED', targetSession)
+    io.to(sessionId).emit('GAME_SESSION_UPDATED', {
+      rules: targetSession.rules,
+    })
   }
 }
 

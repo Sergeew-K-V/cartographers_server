@@ -17,7 +17,7 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
     if (targetUser) {
       if (targetLobby.userList.length === 1) {
         removeLobbyByLobbyId(targetLobby)
-        io.emit('LOBBY_DELETED', targetLobby)
+        io.emit('LOBBY_DELETED', targetLobby.id)
       } else {
         const isHostOfLobby = targetLobby.host === targetUser.nickname
 
@@ -32,7 +32,10 @@ const leaveLobby = (configuration: IConfiguration, userId: string) => {
         }
 
         updateLobbyList(targetLobby)
-        io.emit('LOBBY_UPDATED', targetLobby)
+        io.emit('LOBBY_UPDATED', targetLobby.id, {
+          host: targetLobby.host,
+          userList: targetLobby.userList,
+        })
       }
     }
   }

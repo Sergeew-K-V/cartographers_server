@@ -1,5 +1,5 @@
 import { Socket, Server } from 'socket.io'
-import { ILobby, IGameSession } from './other'
+import { ILobby, IGameSession, IUser } from './other'
 
 type AppSocket = Socket<
   ClientToServerEvents,
@@ -15,13 +15,21 @@ type IoServerType = Server<
   SocketData
 >
 
+type IUpdateDataLobby = IUpdateData<ILobby>
+
+type IUpdateDataGameSession = IUpdateData<IGameSession>
+
+type IUpdateData<T> = {
+  [key in keyof Omit<T, 'id'>]?: T[key]
+}
+
 interface ServerToClientEvents {
   LOBBY_CREATED: (lobby: ILobby) => Promise<void>
-  LOBBY_DELETED: (lobby: ILobby) => void
-  LOBBY_UPDATED: (lobby: ILobby) => void
+  LOBBY_DELETED: (lobbyId: string) => void
+  LOBBY_UPDATED: (lobbyId: string, data: IUpdateDataLobby) => void
 
   GAME_SESSION_CREATED: (session: IGameSession) => void
-  GAME_SESSION_UPDATED: (session: IGameSession) => void
+  GAME_SESSION_UPDATED: (data: IUpdateDataGameSession) => void
 }
 
 interface ClientToServerEvents {
