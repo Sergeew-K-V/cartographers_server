@@ -35,8 +35,8 @@ interface ClientToServerEvents {
   REMOVE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REROLL_POINT_CARDS: (lobbyId: string, userId: string) => void
 
-  START_GAME: () => void
-  END_GAME: () => void
+  START_GAME: (sessionId: string) => void
+  END_GAME: (sessionId: string) => void
 }
 
 interface InterServerEvents {}

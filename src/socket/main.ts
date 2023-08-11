@@ -1,8 +1,10 @@
 import { AppSocket, IConfiguration, IoServerType } from '../types'
 import {
   createGameSession,
+  endGameSession,
   removeGameSession,
   rerollPointCards,
+  startGameSession,
 } from './gameSession'
 import { createLobby, joinLobby, leaveLobby, disconnectSocket } from './lobby'
 
@@ -17,17 +19,23 @@ const MainAction = (socket: AppSocket, io: IoServerType) => {
 
   socket.on('LEAVE_LOBBY', (userId) => leaveLobby(configuration, userId))
 
-  socket.on('CREATE_GAME_SESSION', (lobbyId, userId) =>
-    createGameSession(configuration, lobbyId, userId)
+  socket.on('CREATE_GAME_SESSION', (sessionId, userId) =>
+    createGameSession(configuration, sessionId, userId)
   )
 
-  socket.on('REMOVE_GAME_SESSION', (lobbyId, userId) =>
-    removeGameSession(configuration, lobbyId, userId)
+  socket.on('REMOVE_GAME_SESSION', (sessionId, userId) =>
+    removeGameSession(configuration, sessionId, userId)
   )
 
-  socket.on('REROLL_POINT_CARDS', (lobbyId, userId) =>
-    rerollPointCards(configuration, lobbyId)
+  socket.on('REROLL_POINT_CARDS', (sessionId, userId) =>
+    rerollPointCards(configuration, sessionId)
   )
+
+  socket.on('START_GAME', (sessionId) =>
+    startGameSession(configuration, sessionId)
+  )
+
+  socket.on('END_GAME', (sessionId) => endGameSession(configuration, sessionId))
 
   socket.on('DISCONNECT', () => disconnectSocket(configuration))
 }

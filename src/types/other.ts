@@ -39,7 +39,7 @@ interface IGameSession {
   players: IUserGameData[]
   isStarted: boolean
   currentCard: string | null
-  remainingCards: string[]
+  poolOfCards: string[]
   playedCards: string[]
   enemyCards: string[]
 }

@@ -1,5 +1,5 @@
 import { DECK_OF_CARDS, DECK_OF_ENEMY_CARDS, GAME_FIELD } from '../constants'
-import { getPointCards, shuffleArray } from '../helpers'
+import { getPointCards } from '../helpers'
 import { IGameSession, IUser, IUserGameData } from '../types'
 
 let gameSessionList: IGameSession[] = []
@@ -56,8 +56,8 @@ const initNewGameSession = (
     players: [player],
     isStarted: false,
     currentCard: null,
-    remainingCards: shuffleArray([...DECK_OF_CARDS]),
-    enemyCards: shuffleArray([...DECK_OF_ENEMY_CARDS]),
+    poolOfCards: [...DECK_OF_CARDS],
+    enemyCards: [...DECK_OF_ENEMY_CARDS],
     playedCards: [],
   }
 }
