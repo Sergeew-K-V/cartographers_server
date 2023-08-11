@@ -28,27 +28,22 @@ const GAME_POINTS_CARDS = {
 }
 
 const DECK_OF_CARDS = [
-  '/images/cards/card_1.png',
-  '/images/cards/card_2.png',
-  '/images/cards/card_3.png',
-  '/images/cards/card_4.png',
-  '/images/cards/card_5.png',
-  '/images/cards/card_6.png',
-  '/images/cards/card_7.png',
-  '/images/cards/card_8.png',
-  '/images/cards/card_9.png',
-  '/images/cards/card_10.png',
-  '/images/cards/card_11.png',
-  '/images/cards/card_12.png',
-  '/images/cards/card_13.png',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+  '13',
 ]
 
-const DECK_OF_ENEMY_CARDS = [
-  '/images/cards/enemy_card_1.png',
-  '/images/cards/enemy_card_2.png',
-  '/images/cards/enemy_card_3.png',
-  '/images/cards/enemy_card_4.png',
-]
+const DECK_OF_ENEMY_CARDS = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4']
 
 const GAME_FIELD: IFieldCell[][] = [
   [
