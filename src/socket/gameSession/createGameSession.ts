@@ -1,6 +1,7 @@
 import userModel from '../../models/user.model'
 import {
   addGameSession,
+  convetSessionForClient,
   findGameSessionById,
   findPlayerInSessionById,
   initNewGameSession,
@@ -28,7 +29,10 @@ const createGameSession = async (
       //refresh browser page, we are returning your user to lobby and give a session
       if (targetPlayer) {
         socket.join(sessionId)
-        io.to(sessionId).emit('GAME_SESSION_CREATED', targetSession)
+        io.to(sessionId).emit(
+          'GAME_SESSION_CREATED',
+          convetSessionForClient(targetSession)
+        )
         return
       }
 
@@ -36,7 +40,7 @@ const createGameSession = async (
 
       updateSessionList(targetSession)
 
-      socket.emit('GAME_SESSION_CREATED', targetSession)
+      socket.emit('GAME_SESSION_CREATED', convetSessionForClient(targetSession))
 
       io.to(sessionId).emit('GAME_SESSION_UPDATED', {
         players: targetSession.players,
@@ -46,7 +50,10 @@ const createGameSession = async (
 
       addGameSession(gameSession)
 
-      io.to(sessionId).emit('GAME_SESSION_CREATED', gameSession)
+      io.to(sessionId).emit(
+        'GAME_SESSION_CREATED',
+        convetSessionForClient(gameSession)
+      )
     }
   }
 }

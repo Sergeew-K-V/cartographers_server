@@ -5,6 +5,7 @@ import {
   ILobby,
   IUser,
   IUserGameData,
+  IGameSessionClient,
 } from './other'
 import {
   AppSocket,
@@ -28,4 +29,5 @@ export {
   IGameSession,
   IFieldCell,
   IUserGameData,
+  IGameSessionClient,
 }

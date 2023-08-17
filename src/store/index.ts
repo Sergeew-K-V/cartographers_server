@@ -7,6 +7,7 @@ import {
   addGameSession,
   initNewPlayer,
   initNewGameSession,
+  convetSessionForClient,
 } from './gameSession'
 import {
   findLobbyByUserId,
@@ -40,4 +41,5 @@ export {
   initNewLobby,
   addLobbyToLobbyList,
   getLobbyList,
+  convetSessionForClient,
 }

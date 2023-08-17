@@ -1,6 +1,11 @@
 import { DECK_OF_CARDS, DECK_OF_ENEMY_CARDS, GAME_FIELD } from '../constants'
 import { getPointCards } from '../helpers'
-import { IGameSession, IUser, IUserGameData } from '../types'
+import {
+  IGameSession,
+  IUser,
+  IUserGameData,
+  IGameSessionClient,
+} from '../types'
 
 let gameSessionList: IGameSession[] = []
 
@@ -62,6 +67,34 @@ const initNewGameSession = (
   }
 }
 
+const convetSessionForClient = (session: IGameSession): IGameSessionClient => {
+  const {
+    currentCard,
+    host,
+    id,
+    isStarted,
+    playedCards,
+    players,
+    poolOfCards,
+    rules,
+    time,
+    winner,
+  } = session
+
+  return {
+    currentCard,
+    host,
+    id,
+    isStarted,
+    players,
+    rules,
+    time,
+    winner,
+    playedCards,
+    poolOfCardsNumber: poolOfCards.length,
+  }
+}
+
 export {
   findGameSessionById,
   removeSessionById,
@@ -71,4 +104,5 @@ export {
   addGameSession,
   initNewPlayer,
   initNewGameSession,
+  convetSessionForClient,
 }

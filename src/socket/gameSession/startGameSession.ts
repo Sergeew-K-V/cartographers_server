@@ -3,7 +3,9 @@ import { findGameSessionById, updateSessionList } from '../../store'
 import { IConfiguration, IGameSession } from '../../types'
 
 function removeCardFromArray(targetCard: string, targetCardArray: string[]) {
-  const updatedArray = targetCardArray.filter((card) => card !== targetCard)
+  const updatedArray = targetCardArray.map((card) =>
+    card !== targetCard ? '' : card
+  )
   return updatedArray
 }
 
@@ -44,9 +46,12 @@ const startGameSession = (configuration: IConfiguration, sessionId: string) => {
 
     updateSessionList(targetSession)
 
+    console.log(
+      'startGameSession ~ targetSession.poolOfCards.length:',
+      targetSession.poolOfCards.length
+    )
     io.to(sessionId).emit('GAME_SESSION_UPDATED', {
-      poolOfCards: targetSession.poolOfCards,
-      enemyCards: targetSession.enemyCards,
+      poolOfCardsNumber: targetSession.poolOfCards.length,
       currentCard: targetSession.currentCard,
       isStarted: targetSession.isStarted,
     })

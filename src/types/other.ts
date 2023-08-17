@@ -55,6 +55,19 @@ interface IUserGameData {
   points: number[][]
 }
 
+interface IGameSessionClient {
+  id: string
+  rules: string[]
+  winner: string
+  host: string
+  time: number
+  players: IUserGameData[]
+  isStarted: boolean
+  currentCard: string | null
+  poolOfCardsNumber: number
+  playedCards: string[]
+}
+
 export {
   IConfiguration,
   IFieldCell,
@@ -62,4 +75,5 @@ export {
   ILobby,
   IUser,
   IUserGameData,
+  IGameSessionClient,
 }

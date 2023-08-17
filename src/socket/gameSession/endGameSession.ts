@@ -16,8 +16,7 @@ const endGameSession = (configuration: IConfiguration, sessionId: string) => {
     updateSessionList(targetSession)
 
     io.to(sessionId).emit('GAME_SESSION_UPDATED', {
-      poolOfCards: targetSession.poolOfCards,
-      enemyCards: targetSession.enemyCards,
+      poolOfCardsNumber: targetSession.poolOfCards.length,
       currentCard: targetSession.currentCard,
       isStarted: targetSession.isStarted,
     })
