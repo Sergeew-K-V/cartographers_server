@@ -46,10 +46,6 @@ const startGameSession = (configuration: IConfiguration, sessionId: string) => {
 
     updateSessionList(targetSession)
 
-    console.log(
-      'startGameSession ~ targetSession.poolOfCards.length:',
-      targetSession.poolOfCards.length
-    )
     io.to(sessionId).emit('GAME_SESSION_UPDATED', {
       poolOfCardsNumber: targetSession.poolOfCards.length,
       currentCard: targetSession.currentCard,
