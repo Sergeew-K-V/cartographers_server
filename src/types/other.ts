@@ -47,20 +47,6 @@ interface ILobby {
   isStarted: boolean
 }
 
-interface IGameSession {
-  id: string
-  rules: string[]
-  winner: string
-  host: string
-  time: number
-  players: IUserGameData[]
-  isStarted: boolean
-  currentCard: string | null
-  poolOfCards: string[]
-  playedCards: string[]
-  enemyCards: string[]
-}
-
 interface IUserGameData {
   _id: string
   nickname: string
@@ -72,6 +58,20 @@ interface IUserGameData {
   points: number[][]
 }
 
+interface IGameSession {
+  id: string
+  rules: string[]
+  winner: string
+  host: string
+  time: number
+  players: IUserGameData[]
+  isStarted: boolean
+  currentCard: IGameCard | null
+  poolOfCards: (IGameCard | null)[]
+  playedCards: (IGameCard | null)[]
+  enemyCards: (IGameCard | null)[]
+}
+
 interface IGameSessionClient {
   id: string
   rules: string[]
@@ -80,7 +80,7 @@ interface IGameSessionClient {
   time: number
   players: IUserGameData[]
   isStarted: boolean
-  currentCard: string | null
+  currentCard: IGameCard | null
   poolOfCardsNumber: number
   playedCards: string[]
 }

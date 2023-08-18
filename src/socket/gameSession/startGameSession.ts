@@ -1,15 +1,21 @@
 import { getCard, shuffleArray } from '../../helpers'
 import { findGameSessionById, updateSessionList } from '../../store'
-import { IConfiguration, IGameSession } from '../../types'
+import { IConfiguration, IGameCard } from '../../types'
 
-function removeCardFromArray(targetCard: string, targetCardArray: string[]) {
+function removeCardFromArray(
+  targetCard: IGameCard,
+  targetCardArray: (IGameCard | null)[]
+) {
   const updatedArray = targetCardArray.map((card) =>
-    card !== targetCard ? '' : card
+    card !== targetCard ? null : card
   )
   return updatedArray
 }
 
-function updateCardArray(targetCard: string, targetCardArray: string[]) {
+function updateCardArray(
+  targetCard: IGameCard,
+  targetCardArray: (IGameCard | null)[]
+) {
   const updatedArray = [...targetCardArray, targetCard]
   return updatedArray
 }
