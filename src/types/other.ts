@@ -17,9 +17,26 @@ interface IConfiguration {
   io: IoServerType
 }
 
-interface IFieldCell {
-  id: number
-  image: string
+type IGameCardType =
+  | 'city'
+  | 'wood'
+  | 'ground'
+  | 'water'
+  | 'enemy'
+  | 'mountain'
+  | 'ruins'
+  | 'cell'
+
+type IFieldCell = 1 | 0
+
+interface IGameCard {
+  id: string
+  img: string
+  name: string
+  cost: number
+  type: IGameCardType[]
+  matrix: IFieldCell[][]
+  coinsMatrix?: IFieldCell[][]
 }
 
 interface ILobby {
@@ -76,4 +93,6 @@ export {
   IUser,
   IUserGameData,
   IGameSessionClient,
+  IGameCard,
+  IGameCardType,
 }

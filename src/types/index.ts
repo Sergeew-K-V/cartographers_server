@@ -6,6 +6,8 @@ import {
   IUser,
   IUserGameData,
   IGameSessionClient,
+  IGameCard,
+  IGameCardType,
 } from './other'
 import {
   AppSocket,
@@ -30,4 +32,6 @@ export {
   IFieldCell,
   IUserGameData,
   IGameSessionClient,
+  IGameCard,
+  IGameCardType,
 }
