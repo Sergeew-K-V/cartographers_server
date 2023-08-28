@@ -44,14 +44,14 @@ interface IGameCard {
 }
 
 interface IGameFieldCell {
-  value: ICellValue
+  value: ICell
   type: IGameCardType
   isChangeable: boolean
 }
 
-type ICellValue = 1 | 0
+type ICell = 1 | 0
 
-type ICardMatrix = ICellValue[][]
+type ICardMatrix = ICell[][]
 
 type IGameFieldMatrix = IGameFieldCell[][]
 
@@ -69,7 +69,7 @@ interface IGameSessionClient {
 }
 
 export {
-  ICellValue,
+  ICell,
   IGameSession,
   IUserGameData,
   IGameSessionClient,

@@ -1,6 +1,6 @@
 import { ILobby, IUser } from './other'
 import {
-  ICellValue,
+  ICell,
   IGameSession,
   IUserGameData,
   IGameSessionClient,
@@ -28,7 +28,7 @@ export {
   AppSocket,
   IoServerType,
   IGameSession,
-  ICellValue,
+  ICell,
   IUserGameData,
   IGameSessionClient,
   IGameCard,
