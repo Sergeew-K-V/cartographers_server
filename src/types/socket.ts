@@ -1,5 +1,11 @@
 import { Socket, Server } from 'socket.io'
-import { ILobby, IGameSessionClient } from './other'
+import { ILobby } from './other'
+import { IGameSessionClient } from './gameSession'
+
+interface IConfiguration {
+  socket: AppSocket
+  io: IoServerType
+}
 
 type AppSocket = Socket<
   ClientToServerEvents,
@@ -58,4 +64,5 @@ export {
   IoServerType,
   ServerToClientEvents,
   SocketData,
+  IConfiguration,
 }

@@ -1,14 +1,12 @@
+import { ILobby, IUser } from './other'
 import {
-  IConfiguration,
-  IFieldCell,
+  ICellValue,
   IGameSession,
-  ILobby,
-  IUser,
   IUserGameData,
   IGameSessionClient,
   IGameCard,
   IGameCardType,
-} from './other'
+} from './gameSession'
 import {
   AppSocket,
   ClientToServerEvents,
@@ -16,6 +14,7 @@ import {
   IoServerType,
   ServerToClientEvents,
   SocketData,
+  IConfiguration,
 } from './socket'
 
 export {
@@ -29,7 +28,7 @@ export {
   AppSocket,
   IoServerType,
   IGameSession,
-  IFieldCell,
+  ICellValue,
   IUserGameData,
   IGameSessionClient,
   IGameCard,
