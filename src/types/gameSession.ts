@@ -18,7 +18,7 @@ interface IGameSession {
   isStarted: boolean
   currentCard: IGameCard | null
   poolOfCards: (IGameCard | null)[]
-  playedCards: (IGameCard | null)[]
+  playedCards: IGameCard[]
   enemyCards: (IGameCard | null)[]
 }
 
@@ -64,7 +64,7 @@ interface IGameSessionClient {
   isStarted: boolean
   currentCard: IGameCard | null
   poolOfCardsNumber: number
-  playedCards: string[]
+  playedCards: IGameCard[]
 }
 
 export {
