@@ -6,6 +6,9 @@ import {
   IGameSessionClient,
   IGameCard,
   IGameCardType,
+  ICardMatrix,
+  IGameFieldCell,
+  IGameFieldMatrix,
 } from './gameSession'
 import {
   AppSocket,
@@ -33,4 +36,7 @@ export {
   IGameSessionClient,
   IGameCard,
   IGameCardType,
+  ICardMatrix,
+  IGameFieldCell,
+  IGameFieldMatrix,
 }

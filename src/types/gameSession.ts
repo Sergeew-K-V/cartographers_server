@@ -46,7 +46,6 @@ interface IGameCard {
 interface IGameFieldCell {
   value: ICell
   type: IGameCardType
-  isChangeable: boolean
 }
 
 type ICell = 1 | 0
