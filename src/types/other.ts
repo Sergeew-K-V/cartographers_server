@@ -1,21 +1,26 @@
-interface IUser {
+export interface IPlayerCreateData {
   email: string
-  _id: string
+  password: string
   nickname: string
-  rang?: string
-  gameStats?: {
+  rang: string
+  gameStats: {
     rate: number
     wins: number
     loses: number
   }
 }
+export interface IPlayer extends Omit<IPlayerCreateData, 'password'> {
+  id: string
+}
 
-interface ILobby {
+export interface IPlayerDocument extends IPlayerCreateData, Document {
+  id: string
+}
+
+export interface ILobby {
   id: string
   name: string
   host: string
-  userList: IUser[]
+  userList: IPlayer[]
   isStarted: boolean
 }
-
-export { ILobby, IUser }

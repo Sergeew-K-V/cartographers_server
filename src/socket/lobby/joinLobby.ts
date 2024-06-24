@@ -1,5 +1,5 @@
 import { IConfiguration } from '../../types'
-import userModel from '../../models/user.model'
+import userModel from '../../models/player.model'
 import {
   findLobbyByLobbyId,
   findUserInLobbyByUserId,

@@ -48,6 +48,7 @@ interface ClientToServerEvents {
   CREATE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REMOVE_GAME_SESSION: (lobbyId: string, userId: string) => Promise<void>
   REROLL_POINT_CARDS: (lobbyId: string, userId: string) => void
+  PLAYER_SUBMIT_STEP: (lobbyId: string, userId: string) => void
 
   START_GAME: (sessionId: string) => void
   END_GAME: (sessionId: string) => void

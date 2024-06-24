@@ -5,6 +5,7 @@ import {
   removeGameSession,
   rerollPointCards,
   startGameSession,
+  submitPlayerStep,
 } from './gameSession'
 import { createLobby, joinLobby, leaveLobby, disconnectSocket } from './lobby'
 
@@ -30,6 +31,10 @@ const MainAction = (socket: AppSocket, io: IoServerType) => {
   socket.on('REROLL_POINT_CARDS', (sessionId, userId) =>
     rerollPointCards(configuration, sessionId)
   )
+
+  socket.on('PLAYER_SUBMIT_STEP', (sessionId, userId) => {
+    submitPlayerStep(configuration, sessionId, userId)
+  })
 
   socket.on('START_GAME', (sessionId) =>
     startGameSession(configuration, sessionId)

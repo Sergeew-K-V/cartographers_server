@@ -7,7 +7,7 @@ import cors from 'cors'
 import express, { Application } from 'express'
 import { Server } from 'socket.io'
 import http from 'http'
-import { router as userRoutes } from './routes/user.routes'
+import { router as playerRoutes } from './routes/player.routes'
 import { router as authRoutes } from './routes/auth.routes'
 import { router as lobbyRoutes } from './routes/lobby.routes'
 import mongoose from 'mongoose'
@@ -43,7 +43,7 @@ async function startServer() {
       app.use(express.json())
       app.use(cors())
       app.use('/lobbies', lobbyRoutes)
-      app.use('/users', userRoutes)
+      app.use('/player', playerRoutes)
       app.use('/', authRoutes)
 
       io.on('connection', (socket) => MainAction(socket, io))

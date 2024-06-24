@@ -1,4 +1,4 @@
-import userModel from '../../models/user.model'
+import userModel from '../../models/player.model'
 import {
   addGameSession,
   convetSessionForClient,

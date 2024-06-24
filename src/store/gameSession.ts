@@ -44,7 +44,7 @@ const initNewPlayer = (user: IUser): IUserGameData => {
     score: 0,
     rang: user.rang as string,
     coins: 0,
-    points: [],
+    points: [], // [[1,2,3,4],[5,6,7,8]]
   }
 }
 
