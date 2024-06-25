@@ -1,4 +1,4 @@
-export interface IPlayerCreateData {
+export interface IUserCreateData {
   email: string
   password: string
   nickname: string
@@ -9,11 +9,11 @@ export interface IPlayerCreateData {
     loses: number
   }
 }
-export interface IPlayer extends Omit<IPlayerCreateData, 'password'> {
+export interface IUser extends Omit<IUserCreateData, 'password'> {
   id: string
 }
 
-export interface IPlayerDocument extends IPlayerCreateData, Document {
+export interface IUserDocument extends IUserCreateData, Document {
   id: string
 }
 
@@ -21,6 +21,6 @@ export interface ILobby {
   id: string
   name: string
   host: string
-  userList: IPlayer[]
+  players: IUser[]
   isStarted: boolean
 }

@@ -78,6 +78,9 @@ const loginUser = async (req: Request, res: Response) => {
   }
 }
 
-const forgotPassword = async (req: Request, res: Response) => {}
+const forgotPassword = async (req: Request, res: Response) => {
+  console.log('🚀 ~ res:', res)
+  console.log('🚀 ~ req:', req)
+}
 
 export { registerUser, loginUser, forgotPassword }

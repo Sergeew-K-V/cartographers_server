@@ -1,3 +1,3 @@
-import PlayerModel from './player.model'
+import UserModel from './user.model'
 
-export { PlayerModel }
+export { UserModel }

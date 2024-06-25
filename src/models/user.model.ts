@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { IPlayerCreateData, IPlayerDocument } from '../types/other'
+import { IUserCreateData, IUserDocument } from '../types/other'
 
-const PlayerSchema = new Schema<IPlayerCreateData>({
+const UserSchema = new Schema<IUserCreateData>({
   email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   nickname: { type: String, require: true },
@@ -13,6 +13,6 @@ const PlayerSchema = new Schema<IPlayerCreateData>({
   },
 })
 
-const PlayerModel = model<IPlayerDocument>('Player', PlayerSchema)
+const UserModel = model<IUserDocument>('User', UserSchema)
 
-export default PlayerModel
+export default UserModel

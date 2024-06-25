@@ -1,5 +1,5 @@
-import { PlayerModel } from '../models'
-import { IPlayer, IPlayerCreateData, IPlayerDocument } from '../types/other'
+import { UserModel } from '../models'
+import { IUser, IUserCreateData, IUserDocument } from '../types/other'
 import bcryptjs from 'bcryptjs'
 
 type IGameStats = {
@@ -9,23 +9,23 @@ type IGameStats = {
 }
 
 const DEFAULT_STATS: IGameStats = { loses: 0, rate: 1000, wins: 0 } as const
-const DEFAULT_RANG: string = 'string' as const
+const DEFAULT_RANG: string = 'Common' as const
 
-abstract class Player {
+abstract class User {
   abstract create(
     email: string,
     password: string,
     nickname: string
-  ): Promise<IPlayer>
-  abstract findById(id: string): Promise<IPlayer | null>
-  abstract findByEmail(email: string): Promise<IPlayer | null>
+  ): Promise<IUser>
+  abstract findById(id: string): Promise<IUser | null>
+  abstract findByEmail(email: string): Promise<IUser | null>
   abstract comparePassword(password: string, id: string): Promise<boolean>
-  abstract format(data: IPlayerDocument): IPlayer
+  abstract format(data: IUserDocument): IUser
 }
 
-class PlayerService extends Player {
-  format(playerDocument: IPlayerDocument): IPlayer {
-    const { id, email, nickname, rang, gameStats } = playerDocument
+class UserService extends User {
+  format(userDocument: IUserDocument): IUser {
+    const { id, email, nickname, rang, gameStats } = userDocument
 
     return {
       id,
@@ -40,8 +40,8 @@ class PlayerService extends Player {
     email: string,
     password: string,
     nickname: string
-  ): Promise<IPlayer> {
-    const data: IPlayerCreateData = {
+  ): Promise<IUser> {
+    const data: IUserCreateData = {
       email: email.trim(),
       password: password.trim(),
       nickname: nickname.trim(),
@@ -49,35 +49,35 @@ class PlayerService extends Player {
       gameStats: { ...DEFAULT_STATS },
     }
 
-    const player = new PlayerModel(data)
+    const user = new UserModel(data)
 
-    await player.save()
+    await user.save()
 
-    return this.format(player)
+    return this.format(user)
   }
 
-  async findById(id: string): Promise<IPlayer | null> {
-    const player = await PlayerModel.findById(id)
+  async findById(id: string): Promise<IUser | null> {
+    const user = await UserModel.findById(id)
 
-    if (!player) {
+    if (!user) {
       return null
     }
 
-    return this.format(player)
+    return this.format(user)
   }
 
-  async findByEmail(email: string): Promise<IPlayer | null> {
-    const player = await PlayerModel.findOne({ email: email.trim() })
+  async findByEmail(email: string): Promise<IUser | null> {
+    const user = await UserModel.findOne({ email: email.trim() })
 
-    if (!player) {
+    if (!user) {
       return null
     }
 
-    return this.format(player)
+    return this.format(user)
   }
 
   async comparePassword(password: string, id: string): Promise<boolean> {
-    const candidate = await PlayerModel.findById(id)
+    const candidate = await UserModel.findById(id)
 
     if (!candidate) {
       return false
@@ -89,4 +89,4 @@ class PlayerService extends Player {
   }
 }
 
-export default new PlayerService()
+export default new UserService()
