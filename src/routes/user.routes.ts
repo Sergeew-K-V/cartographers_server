@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import verifyToken from '../middleware/verifyToken'
-import { getPlayer } from '../controllers/player.controller'
+import { getUser } from '../controllers/user.controller'
 
 const router = Router()
 
-router.get('/:id', verifyToken, getPlayer)
+router.get('/:id', verifyToken, getUser)
 
 export { router }

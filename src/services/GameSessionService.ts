@@ -7,7 +7,7 @@ import {
   IUserGameData,
 } from '../types'
 import GameCardService from './GameCardService'
-import PlayerService from './PlayerService'
+import PlayerService from './UserService'
 
 abstract class GameSession {
   abstract startGameSession(

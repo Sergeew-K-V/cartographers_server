@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { BAD_REQUEST, CREATED, INTERNAL_ERROR } from '../constants'
-import PlayerService from '../services/PlayerService'
+import PlayerService from '../services/UserService'
 
 const JWT_SECRET = process.env.JWT_SECRET
 

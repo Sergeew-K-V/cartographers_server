@@ -1,6 +1,6 @@
 import { uid } from 'uid'
 import { IConfiguration, ILobby, IPlayer } from '../types'
-import PlayerService from './PlayerService'
+import PlayerService from './UserService'
 
 abstract class Lobby {
   abstract create(
