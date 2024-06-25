@@ -4,6 +4,6 @@ import { getUser } from '../controllers/user.controller'
 
 const router = Router()
 
-router.get('/:_id', verifyToken, getUser)
+router.get('/:id', verifyToken, getUser)
 
 export { router }

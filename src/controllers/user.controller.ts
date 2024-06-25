@@ -1,14 +1,16 @@
 import { Request, Response } from 'express'
 import { BAD_REQUEST, INTERNAL_ERROR } from '../constants'
-import userModel from '../models/user.model'
+import PlayerService from '../services/UserService'
+
+interface GetUserParams {
+  id: string
+}
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const _id = req.params
+    const { id } = req.params as unknown as GetUserParams
 
-    const user = await userModel.findOne({
-      _id,
-    })
+    const user = await PlayerService.findById(id)
 
     if (!user) {
       return res.status(BAD_REQUEST).json("User didn't find")

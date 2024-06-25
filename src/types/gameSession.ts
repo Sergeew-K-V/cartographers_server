@@ -17,13 +17,13 @@ interface IGameSession {
   players: IUserGameData[]
   isStarted: boolean
   currentCard: IGameCard | null
-  poolOfCards: (IGameCard | null)[]
+  poolOfCards: IGameCard[]
   playedCards: IGameCard[]
-  enemyCards: (IGameCard | null)[]
+  enemyCards: IGameCard[]
 }
 
 interface IUserGameData {
-  _id: string
+  id: string
   nickname: string
   gameField: IGameFieldMatrix
   isReady: boolean
