@@ -1,6 +1,7 @@
 import { uid } from 'uid'
-import { IConfiguration, ILobby, IPlayer } from '../types'
+import { IConfiguration, ILobby } from '../types'
 import PlayerService from './UserService'
+import { IUser } from '../types/other'
 
 abstract class Lobby {
   abstract create(
@@ -33,7 +34,7 @@ class LobbyService extends Lobby {
     }
   }
 
-  private initNewLobby(host: IPlayer): ILobby {
+  private initNewLobby(host: IUser): ILobby {
     return {
       id: uid(),
       name: host.nickname + '-lobby',
