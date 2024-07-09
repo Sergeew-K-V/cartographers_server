@@ -39,7 +39,6 @@ async function startServer() {
           cert: certificate,
         }
       }
-      console.log('🚀 ~ startServer ~ certificates:', certificates)
 
       let server =
         runType === 'prod' && certificates
