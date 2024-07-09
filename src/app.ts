@@ -32,16 +32,14 @@ async function startServer() {
     if (DATABASE_URL) {
       let certificates
       if (process.env.CERT_PATH && process.env.PRIVATE_KEY_PATH) {
-        const privateKey = fs.readFileSync(process.env.CERT_PATH, 'utf8')
-        const certificate = fs.readFileSync(
-          process.env.PRIVATE_KEY_PATH,
-          'utf8'
-        )
+        const privateKey = fs.readFileSync(process.env.PRIVATE_KEY_PATH, 'utf8')
+        const certificate = fs.readFileSync(process.env.CERT_PATH, 'utf8')
         certificates = {
           key: privateKey,
           cert: certificate,
         }
       }
+      console.log('🚀 ~ startServer ~ certificates:', certificates)
 
       let server =
         runType === 'prod' && certificates
