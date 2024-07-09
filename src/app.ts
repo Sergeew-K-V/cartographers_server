@@ -5,6 +5,7 @@ const DATABASE_URL = process.env.DATABASE_URL
 
 import cors from 'cors'
 import express, { Application } from 'express'
+import fs from 'fs'
 import { Server } from 'socket.io'
 import http from 'http'
 import https from 'https'
@@ -29,10 +30,18 @@ const app: Application = express()
 async function startServer() {
   try {
     if (DATABASE_URL) {
-      const certificates: {
-        key?: string
-        cert?: string
-      } = { cert: process.env.CERT_PATH, key: process.env.PRIVATE_KEY_PATH }
+      let certificates
+      if (process.env.CERT_PATH && process.env.PRIVATE_KEY_PATH) {
+        const privateKey = fs.readFileSync(process.env.CERT_PATH, 'utf8')
+        const certificate = fs.readFileSync(
+          process.env.PRIVATE_KEY_PATH,
+          'utf8'
+        )
+        certificates = {
+          key: privateKey,
+          cert: certificate,
+        }
+      }
 
       let server =
         runType === 'prod' && certificates
