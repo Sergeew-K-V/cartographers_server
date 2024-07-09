@@ -1,4 +1,4 @@
-import { ILobby, IPlayer } from './other'
+import { ILobby } from './other'
 import {
   ICell,
   IGameSession,
@@ -21,7 +21,6 @@ import {
 } from './socket'
 
 export {
-  IPlayer,
   ILobby,
   IConfiguration,
   ClientToServerEvents,

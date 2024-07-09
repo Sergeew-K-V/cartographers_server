@@ -3,9 +3,9 @@ import {
   IConfiguration,
   IGameSession,
   IGameSessionClient,
-  IPlayer,
   IUserGameData,
 } from '../types'
+import { IUser } from '../types/other'
 import GameCardService from './GameCardService'
 import PlayerService from './UserService'
 
@@ -67,7 +67,7 @@ class GameSessionService extends GameSession {
     this.gameSessions.push(newGameSession)
   }
 
-  private initSessionPlayer(player: IPlayer): IUserGameData {
+  private initSessionPlayer(player: IUser): IUserGameData {
     return {
       id: player.id,
       nickname: player.nickname as string,
