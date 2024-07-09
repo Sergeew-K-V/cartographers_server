@@ -20,7 +20,9 @@ import {
 } from './types'
 import MainAction from './socket/main'
 
-let runType: 'development' | 'prod' = 'development'
+let runType: 'development' | 'prod' = process.env.RUN_TYPE
+  ? (process.env.RUN_TYPE as 'development' | 'prod')
+  : 'development'
 
 const app: Application = express()
 
