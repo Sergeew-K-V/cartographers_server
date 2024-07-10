@@ -65,6 +65,10 @@ async function startServer() {
       app.use('/user', userRoutes)
       app.use('/', authRoutes)
 
+      app.route('/').get((req, res) => {
+        res.send('Hello World!')
+      })
+
       io.on('connection', (socket) => MainAction(socket, io))
       server.listen(PORT, (): void =>
         console.log(`Server is running on port ${PORT}`)
