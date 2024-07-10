@@ -61,13 +61,9 @@ async function startServer() {
 
       app.use(express.json())
       app.use(cors())
-      app.use('/lobbies', lobbyRoutes)
-      app.use('/user', userRoutes)
-      app.use('/', authRoutes)
-
-      app.route('/').get((req, res) => {
-        res.send('Hello World!')
-      })
+      app.use('/api/lobbies', lobbyRoutes)
+      app.use('/api/user', userRoutes)
+      app.use('/api/', authRoutes)
 
       io.on('connection', (socket) => MainAction(socket, io))
       server.listen(PORT, (): void =>
