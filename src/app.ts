@@ -53,6 +53,7 @@ async function startServer() {
         InterServerEvents,
         SocketData
       >(server, {
+        path: '/socket/',
         cors: {
           origin: '*',
           methods: ['GET', 'POST'],
