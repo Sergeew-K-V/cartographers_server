@@ -4,7 +4,7 @@ import { AppSocket, IConfiguration, IoServerType } from '../types'
 
 const MainAction = (socket: AppSocket, io: IoServerType) => {
   const configuration: IConfiguration = { socket, io }
-
+  console.log('connected to socket')
   socket.on(
     'CREATE_LOBBY',
     async (playerId) => await LobbyService.create(configuration, playerId)

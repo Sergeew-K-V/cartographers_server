@@ -53,7 +53,7 @@ async function startServer() {
         InterServerEvents,
         SocketData
       >(server, {
-        path: '/socket/',
+        path: runType === 'prod' ? '/socket/' : '',
         cors: {
           origin: '*',
           methods: ['GET', 'POST'],
@@ -68,7 +68,11 @@ async function startServer() {
 
       io.on('connection', (socket) => MainAction(socket, io))
       server.listen(PORT, (): void =>
-        console.log(`Server is running on port ${PORT}`)
+        console.log(
+          `Server is running on port ${
+            runType === 'prod' ? 'https://' : 'http://'
+          }localhost:${PORT}`
+        )
       )
     }
   } catch (error) {
